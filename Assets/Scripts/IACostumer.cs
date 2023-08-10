@@ -16,24 +16,31 @@ public class IACostumer : MonoBehaviour
 
     [Header("Variables")]
     public bool comprado;
+    int numDeFila = 0;
 
     private void Awake() {
-    
-        DestinoCompra = ManagerIA.instance.DestinosDeComprador[Random.Range(0, 3)];
+
+        numDeFila = Random.Range(0, 3);
+        DestinoCompra = ManagerIA.instance.DestinosDeComprador[numDeFila];
+
+        switch (numDeFila) {
+            case 0:
+                ManagerIA.instance.Clientef1.Add(this.gameObject);
+                break;
+            case 1:
+                ManagerIA.instance.Clientef2.Add(this.gameObject);
+                break; 
+            case 2:
+                ManagerIA.instance.Clientef3.Add(this.gameObject);
+                break;
+            default:
+                break;
+        }
+
         DestinoSalida = ManagerIA.instance.SalidasDeComprador[Random.Range(0, 3)];
 
-    
-    }
-    private void Start()
-    {
         ChangeState(ManagerIA.IACostumer.None);
-    }
-
-    private void Update()
-    {
-        if (CurrentState == ManagerIA.IACostumer.Waiting) {
-
-        }
+    
     }
 
     public void CheckState()
@@ -45,18 +52,35 @@ public class IACostumer : MonoBehaviour
                 ChangeState(ManagerIA.IACostumer.Walk);
                 break;
             case ManagerIA.IACostumer.Walk:
+                //Constante Guia para la fila
+                int a = 2;
+                //La constante se le suma la cantidad de clientes
+                switch (numDeFila) {
+                    case 0:
+                        a += ManagerIA.instance.Clientef1.Count;
+                        Debug.Log(this.gameObject + "Pos en fila: " + a);
+                        break;
+                    case 1:
+                        a += ManagerIA.instance.Clientef2.Count;
+                        Debug.Log(this.gameObject + "Pos en fila: " + a);
+                        break;
+                    case 2:
+                        a += ManagerIA.instance.Clientef3.Count ;
+                        Debug.Log(this.gameObject +"Pos en fila: " +a);
+                        break;
+                    default:
+                        break;
+                }
 
-                int a = DestinoCompra.childCount+2;
+                //se le asigna destino a todos los clientes
+                if (a > 3) {
 
-                if (DestinoCompra.childCount > 0) {
-
-                    agent.SetDestination(DestinoCompra.position + new Vector3(0, 0, (int)a));
+                    agent.SetDestination(DestinoCompra.position - new Vector3(0, 0, (int)a));
 
                 } else {
                     agent.SetDestination(DestinoCompra.position);
                 }
 
-                agent.SetDestination(DestinoCompra.position);
                 break;
             case ManagerIA.IACostumer.Waiting:
                 print("Esperanding");
@@ -83,8 +107,8 @@ public class IACostumer : MonoBehaviour
     {
         if(other.tag == "LugarCompra")
         {
-            
-            this.gameObject.transform.parent.SetParent(other.transform);
+            this.gameObject.transform.SetParent(other.gameObject.transform);
+
             ChangeState(ManagerIA.IACostumer.Waiting);
             
         }

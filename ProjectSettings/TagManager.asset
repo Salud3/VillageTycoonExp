@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LugarCompra
   - SalidaCliente
+  - Estacion de Trabajo
   layers:
   - Default
   - TransparentFX
