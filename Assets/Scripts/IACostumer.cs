@@ -16,33 +16,21 @@ public class IACostumer : MonoBehaviour
 
     [Header("Variables")]
     public bool comprado;
-    int numDeFila = 0;
+    public int numDeFila = 0;
+    public int peticion = 0;
 
     private void Awake() {
 
         numDeFila = Random.Range(0, 3);
+        peticion = Random.Range(0, ManagerIA.instance.EstacionesDesbloqueadas);
         DestinoCompra = ManagerIA.instance.DestinosDeComprador[numDeFila];
-
-        switch (numDeFila) {
-            case 0:
-                ManagerIA.instance.Clientef1.Add(this.gameObject);
-                break;
-            case 1:
-                ManagerIA.instance.Clientef2.Add(this.gameObject);
-                break; 
-            case 2:
-                ManagerIA.instance.Clientef3.Add(this.gameObject);
-                break;
-            default:
-                break;
-        }
-
+        SwitchFila();
         DestinoSalida = ManagerIA.instance.SalidasDeComprador[Random.Range(0, 3)];
 
         ChangeState(ManagerIA.IACostumer.None);
     
     }
-
+    //Asigna al estado actual una accion
     public void CheckState()
     {
         
@@ -93,7 +81,22 @@ public class IACostumer : MonoBehaviour
                 break;
         }
     }
-
+    //Añade al cliente a una fila
+    public void SwitchFila() {
+        switch (numDeFila) {
+            case 0:
+                ManagerIA.instance.Clientef1.Add(this.gameObject);
+                break;
+            case 1:
+                ManagerIA.instance.Clientef2.Add(this.gameObject);
+                break;
+            case 2:
+                ManagerIA.instance.Clientef3.Add(this.gameObject);
+                break;
+            default:
+                break;
+        }
+    }
 
     public void ChangeState(ManagerIA.IACostumer newstate)
     {

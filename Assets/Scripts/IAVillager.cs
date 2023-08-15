@@ -6,72 +6,91 @@ using static ManagerIA;
 
 public class IAVillager : MonoBehaviour {
     [Header("Villager IA")]
-    public ManagerIA.IAStatesV CurrentState;
+    public ManagerIA.IAStatesV currentState;
     public ManagerIA.IAStatesV oldState;
 
     [Header("Tipo de Trabajo")]
     public ManagerIA.TipoAldeano tipoAldeano;
-    public Transform LugarDeTrabajo;
-    public Transform Lugarentrega;
+    public Transform lugarDeTrabajo;
+    public Transform lugarentrega;
     public Transform Destino;
 
+    [Header("Chambeando")]
+    public bool chambeando = false;
+    public int numpeticion = 0;
+    public int numfila = 0;
 
     [Header("NavMesh")]
     public NavMeshAgent agent;
 
+    public void Update() {
+        if (!chambeando) {
+            BuscarChamba();
+            ChangeState(IAStatesV.Walk);
+        }
+    }
+    //Va a una de las filas a Buscar chamba
+    public void BuscarChamba() {
+
+        numfila = Random.Range(0, 3);
+        agent.SetDestination(ManagerIA.instance.LugarEntregas[numfila].position);
+        chambeando = true;
+
+    }
+    //Asigna al villager un trabajo para trabajar en SOLO esa cosa
     public void AssingJob(int index)
     {
         switch (index)
         {
             case 0:
                 tipoAldeano = TipoAldeano.Farm1;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
 
                 break;
             case 1:
                 tipoAldeano = TipoAldeano.Farm2;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             case 2:
                 tipoAldeano = TipoAldeano.Farm3;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             case 3:
                 tipoAldeano = TipoAldeano.Pescador;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             case 4:
                 tipoAldeano = TipoAldeano.Molinero;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             case 5:
                 tipoAldeano = TipoAldeano.Miner;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             case 6:
                 tipoAldeano = TipoAldeano.Costurero;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             case 7:
                 tipoAldeano = TipoAldeano.Panadero;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             case 8:
                 tipoAldeano = TipoAldeano.Farm1;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             default:
                 tipoAldeano = TipoAldeano.Farm1;
-                LugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
+                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             
         }
 
         CheckState();
     }
-
+    //Asigna al estado actual una accion
     public void CheckState() {
-        switch (CurrentState) {
+        switch (currentState) {
             case ManagerIA.IAStatesV.None:
                 break;
             case ManagerIA.IAStatesV.Walk:
@@ -88,11 +107,11 @@ public class IAVillager : MonoBehaviour {
                 break;
         }
     }
-
+    //Cambia el estado del villager
     public void ChangeState(ManagerIA.IAStatesV newstate) {
 
-        oldState = CurrentState;
-        CurrentState = newstate;
+        oldState = currentState;
+        currentState = newstate;
         Debug.Log("Cambio de estado Cliente a " + newstate);
         CheckState();
 
@@ -100,10 +119,31 @@ public class IAVillager : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "LugarTrabajo")
+        if (other.tag == "LugarTrabajo" && (currentState == IAStatesV.Walk || currentState == IAStatesV.None))
         {
+            AsignarChamba(numfila);
             ChangeState(IAStatesV.Working);
 
+        }
+        if (other.tag == "LugarTrabajo" && currentState == IAStatesV.Carry) {
+            ChangeState(IAStatesV.None);
+
+        }
+    }
+
+    public void AsignarChamba(int a) {
+        switch (a) {
+            case 0:
+                numpeticion = ManagerIA.instance.Clientef1[0].GetComponent<IACostumer>().peticion;
+                break;
+            case 1:
+                numpeticion = ManagerIA.instance.Clientef2[0].GetComponent<IACostumer>().peticion;
+                break;
+            case 2:
+                numpeticion = ManagerIA.instance.Clientef3[0].GetComponent<IACostumer>().peticion;
+                break;
+            default:
+                break;
         }
     }
 

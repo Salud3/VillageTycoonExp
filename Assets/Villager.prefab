@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5939605455813243181}
   - component: {fileID: 5939605455813243170}
   - component: {fileID: 5939605455813243171}
+  - component: {fileID: 8194061337071761420}
   - component: {fileID: 8433208927955779272}
   m_Layer: 0
   m_Name: Villager
@@ -99,6 +100,28 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &8194061337071761420
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5939605455813243168}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &8433208927955779272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,5 +138,6 @@ MonoBehaviour:
   oldState: 0
   tipoAldeano: 0
   LugarDeTrabajo: {fileID: 0}
+  Lugarentrega: {fileID: 0}
   Destino: {fileID: 0}
-  agent: {fileID: 0}
+  agent: {fileID: 8194061337071761420}

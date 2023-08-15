@@ -10,7 +10,8 @@ public class ManagerIA : MonoBehaviour
 
     public enum IACostumer {None, Walk, Waiting, Buyed}
     public static ManagerIA instance;
-
+    [Header("Niveles")]
+    public int EstacionesDesbloqueadas;
     int a = 0;
     [Header("Lugares Costumer y objeto instance")]
     public GameObject costumer;
@@ -29,6 +30,7 @@ public class ManagerIA : MonoBehaviour
     
     public GameObject Villager;
     public Transform[] VillagerSpawn = new Transform[3];
+    public Transform[] LugarEntregas = new Transform[3];
     public Transform[] VillagerTrabajos = new Transform[8];
 
     public List<GameObject> Farm1;
@@ -43,11 +45,10 @@ public class ManagerIA : MonoBehaviour
 
     void Start()
     {
-        
         instance = this;
         isnt();
     }
-
+    //Decide si spawnear o no un cliente
     public void isnt() {
         a = Random.Range(3, 5);
         print(a);
@@ -62,7 +63,7 @@ public class ManagerIA : MonoBehaviour
         
         }
     }
-
+    //Spawnea un Cliente
     public void SummonCostumer() {
         int b = Random.Range(0, 3);
         Instantiate(costumer, EntradasDeComprador[b].position , new Quaternion(0,0,0,0));
@@ -70,12 +71,12 @@ public class ManagerIA : MonoBehaviour
 
         Invoke("isnt", 1f);
     }
-
+    //No spawnea Cliente
     public void NotSummonCost() {
         Invoke("isnt", 1f);
     }
 
-
+    //Spawnea un Aldeano y Añade al trabajo
     public void SummonVillager(int index)
     {
         int b = Random.Range(0, 3);
@@ -84,6 +85,36 @@ public class ManagerIA : MonoBehaviour
 
         clone.GetComponent<IAVillager>().AssingJob(index);
 
-    }
+        switch (index) {
+            case 0:
+                Farm1.Add(clone);
+                break;
+            case 1:
+                Farm2.Add(clone);
+                break;
+            case 2:
+                Farm3.Add(clone);
+                break;
+            case 3:
+                Pescadores.Add(clone);
+                break;
+            case 4:
+                Molineros.Add(clone);
+                break;
+            case 5:
+                Mineros.Add(clone);
+                break;
+            case 6:
+                Costureros.Add(clone);
+                break;
+            case 7:
+                Panaderos.Add(clone);
+                break;
+            default:
+                Farm1.Add(clone);
+                break;
+        }
 
-}
+    }
+    
+}    
