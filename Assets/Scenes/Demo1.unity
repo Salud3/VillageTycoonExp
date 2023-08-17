@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 47624512}
   m_Layer: 0
   m_Name: Estacion de Trabajo 6
-  m_TagString: Estacion de Trabajo
+  m_TagString: Chamba
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 51717094}
   m_Layer: 0
   m_Name: Spawn Villagers 3
-  m_TagString: Estacion de Trabajo
+  m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 364264150}
   m_Layer: 0
   m_Name: Estacion de Trabajo 4
-  m_TagString: Estacion de Trabajo
+  m_TagString: Chamba
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 370496952}
   m_Layer: 0
   m_Name: Lugar de Entrega 1
-  m_TagString: LugarCompra
+  m_TagString: LugarEntrega
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -843,7 +843,7 @@ GameObject:
   - component: {fileID: 740801158}
   m_Layer: 0
   m_Name: Estacion de Trabajo 1
-  m_TagString: Estacion de Trabajo
+  m_TagString: Chamba
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -935,7 +935,7 @@ GameObject:
   - component: {fileID: 834989610}
   m_Layer: 0
   m_Name: Estacion de Trabajo 7
-  m_TagString: Estacion de Trabajo
+  m_TagString: Chamba
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1014,7 +1014,7 @@ GameObject:
   - component: {fileID: 880623099}
   m_Layer: 0
   m_Name: Spawn Villagers 2
-  m_TagString: Estacion de Trabajo
+  m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1060,7 +1060,7 @@ GameObject:
   - component: {fileID: 928453159}
   m_Layer: 0
   m_Name: Lugar de Entrega 3
-  m_TagString: LugarCompra
+  m_TagString: LugarEntrega
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1236,7 +1236,7 @@ GameObject:
   - component: {fileID: 1157748493}
   m_Layer: 0
   m_Name: Estacion de Trabajo 3
-  m_TagString: Estacion de Trabajo
+  m_TagString: Chamba
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1422,9 +1422,9 @@ MonoBehaviour:
   - {fileID: 880623098}
   - {fileID: 51717093}
   LugarEntregas:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 370496951}
+  - {fileID: 1924625422}
+  - {fileID: 928453158}
   VillagerTrabajos:
   - {fileID: 740801157}
   - {fileID: 1682126498}
@@ -1469,7 +1469,7 @@ GameObject:
   - component: {fileID: 1297191995}
   m_Layer: 0
   m_Name: Estacion de Trabajo 8
-  m_TagString: Estacion de Trabajo
+  m_TagString: Chamba
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1655,7 +1655,7 @@ GameObject:
   - component: {fileID: 1409784883}
   m_Layer: 0
   m_Name: Estacion de Trabajo 5
-  m_TagString: Estacion de Trabajo
+  m_TagString: Chamba
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1701,7 +1701,7 @@ GameObject:
   - component: {fileID: 1559480661}
   m_Layer: 0
   m_Name: Spawn Villagers 1
-  m_TagString: Estacion de Trabajo
+  m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1945,7 +1945,7 @@ GameObject:
   - component: {fileID: 1682126499}
   m_Layer: 0
   m_Name: Estacion de Trabajo 2
-  m_TagString: Estacion de Trabajo
+  m_TagString: Chamba
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2328,7 +2328,7 @@ GameObject:
   - component: {fileID: 1924625423}
   m_Layer: 0
   m_Name: Lugar de Entrega 2
-  m_TagString: LugarCompra
+  m_TagString: LugarEntrega
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

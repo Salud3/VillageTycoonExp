@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 using static ManagerIA;
 
 public class IAVillager : MonoBehaviour {
@@ -19,22 +20,45 @@ public class IAVillager : MonoBehaviour {
     public bool chambeando = false;
     public int numpeticion = 0;
     public int numfila = 0;
+    public int cFila1 = 0;
+    public int cFila2 = 0;
+    public int cFila3 = 0;
 
     [Header("NavMesh")]
     public NavMeshAgent agent;
 
-    public void Update() {
+    private void Update() {
         if (!chambeando) {
             BuscarChamba();
-            ChangeState(IAStatesV.Walk);
         }
     }
     //Va a una de las filas a Buscar chamba
     public void BuscarChamba() {
+        cFila1 = ManagerIA.instance.Clientef1.Count;
+        cFila2 = ManagerIA.instance.Clientef2.Count;
+        cFila3 = ManagerIA.instance.Clientef3.Count;
 
-        numfila = Random.Range(0, 3);
-        agent.SetDestination(ManagerIA.instance.LugarEntregas[numfila].position);
+        bool a = cFila1 > cFila2;
+        bool b = cFila2 > cFila3;
+
+        if (a) {
+
+            numfila = 0;
+
+        } else if (b) {
+
+            numfila = 1;
+
+        } else {
+
+            numfila= 2;
+        }
+
+
+        Destino = ManagerIA.instance.LugarEntregas[numfila];
+        lugarentrega = ManagerIA.instance.LugarEntregas[numfila];
         chambeando = true;
+        ChangeState(IAStatesV.Walk);
 
     }
     //Asigna al villager un trabajo para trabajar en SOLO esa cosa
@@ -119,28 +143,55 @@ public class IAVillager : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "LugarTrabajo" && (currentState == IAStatesV.Walk || currentState == IAStatesV.None))
-        {
+        if (other.tag == "LugarEntrega" && currentState != IAStatesV.Carry) {
+            Debug.Log("A");
             AsignarChamba(numfila);
             ChangeState(IAStatesV.Working);
+            
 
-        }
-        if (other.tag == "LugarTrabajo" && currentState == IAStatesV.Carry) {
+        }else if (other.tag == "LugarEntrega" && currentState == IAStatesV.Carry) {
+            Debug.Log("A");
+
             ChangeState(IAStatesV.None);
+            chambeando = false;
+        } else {
+            Debug.Log("B");
 
         }
+
+        if (other.tag == "Chamba") {
+
+            StartCoroutine("Trabajo");
+        }
+
+
     }
 
+    //conforme a la peticion asigna un lugar al cual ir a chambear, requiere un numero de fila
     public void AsignarChamba(int a) {
+        
+        
         switch (a) {
             case 0:
-                numpeticion = ManagerIA.instance.Clientef1[0].GetComponent<IACostumer>().peticion;
+                if (ManagerIA.instance.Clientef1[0]!=null) {
+                    numpeticion = ManagerIA.instance.Clientef1[0].GetComponent<IACostumer>().peticion;
+                } else {
+                    BuscarChamba();
+                }
                 break;
             case 1:
-                numpeticion = ManagerIA.instance.Clientef2[0].GetComponent<IACostumer>().peticion;
+                if (ManagerIA.instance.Clientef1[0] != null) {
+                    numpeticion = ManagerIA.instance.Clientef2[0].GetComponent<IACostumer>().peticion;
+                } else {
+                    BuscarChamba();
+                }
                 break;
             case 2:
-                numpeticion = ManagerIA.instance.Clientef3[0].GetComponent<IACostumer>().peticion;
+                if (ManagerIA.instance.Clientef1[0] != null) {
+                    numpeticion = ManagerIA.instance.Clientef3[0].GetComponent<IACostumer>().peticion;
+                } else {
+                    BuscarChamba();
+                }
                 break;
             default:
                 break;
