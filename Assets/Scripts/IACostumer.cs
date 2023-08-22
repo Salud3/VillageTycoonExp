@@ -98,6 +98,9 @@ public class IACostumer : MonoBehaviour
         }
     }
 
+
+
+
     public void ChangeState(ManagerIA.IACostumer newstate)
     {
         CurrentState = newstate;

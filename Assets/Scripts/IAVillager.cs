@@ -24,10 +24,12 @@ public class IAVillager : MonoBehaviour {
     public int cFila2 = 0;
     public int cFila3 = 0;
 
-    [Header("NavMesh")]
+    [Header("NavMesh y cliente a que atender")]
     public NavMeshAgent agent;
+    IACostumer costumer;
 
-    private void Update() {
+
+    private void Start() {
         if (!chambeando) {
             BuscarChamba();
         }
@@ -54,11 +56,11 @@ public class IAVillager : MonoBehaviour {
             numfila= 2;
         }
 
-
-        Destino = ManagerIA.instance.LugarEntregas[numfila];
-        lugarentrega = ManagerIA.instance.LugarEntregas[numfila];
+        
         chambeando = true;
-        ChangeState(IAStatesV.Walk);
+        lugarentrega = ManagerIA.instance.LugarEntregas[numfila];
+        ChangeDestination(ManagerIA.instance.LugarEntregas[numfila]);
+
 
     }
     //Asigna al villager un trabajo para trabajar en SOLO esa cosa
@@ -116,6 +118,7 @@ public class IAVillager : MonoBehaviour {
     public void CheckState() {
         switch (currentState) {
             case ManagerIA.IAStatesV.None:
+                BuscarChamba();
                 break;
             case ManagerIA.IAStatesV.Walk:
                 agent.SetDestination(Destino.position);
@@ -146,21 +149,21 @@ public class IAVillager : MonoBehaviour {
         if (other.tag == "LugarEntrega" && currentState != IAStatesV.Carry) {
             Debug.Log("A");
             AsignarChamba(numfila);
-            ChangeState(IAStatesV.Working);
-            
+            ChangeDestination(lugarDeTrabajo);
 
         }else if (other.tag == "LugarEntrega" && currentState == IAStatesV.Carry) {
-            Debug.Log("A");
+            Debug.Log("B");
 
-            ChangeState(IAStatesV.None);
-            chambeando = false;
+            ChangeState(IAStatesV.Selling);
+
         } else {
             Debug.Log("B");
 
         }
 
         if (other.tag == "Chamba") {
-
+            
+            ChangeState(IAStatesV.Working);
             StartCoroutine("Trabajo");
         }
 
@@ -169,26 +172,32 @@ public class IAVillager : MonoBehaviour {
 
     //conforme a la peticion asigna un lugar al cual ir a chambear, requiere un numero de fila
     public void AsignarChamba(int a) {
-        
-        
+
         switch (a) {
             case 0:
-                if (ManagerIA.instance.Clientef1[0]!=null) {
-                    numpeticion = ManagerIA.instance.Clientef1[0].GetComponent<IACostumer>().peticion;
+                if (ManagerIA.instance.Clientef1.Count != 0) {
+                    costumer = ManagerIA.instance.Clientef1[0].GetComponent<IACostumer>();
+                    numpeticion = costumer.peticion;
+                    ChangeDestination(lugarDeTrabajo);
+
                 } else {
                     BuscarChamba();
                 }
                 break;
             case 1:
-                if (ManagerIA.instance.Clientef1[0] != null) {
-                    numpeticion = ManagerIA.instance.Clientef2[0].GetComponent<IACostumer>().peticion;
+                if (ManagerIA.instance.Clientef2.Count != 0) {
+                    costumer = ManagerIA.instance.Clientef2[0].GetComponent<IACostumer>();
+                    numpeticion = costumer.peticion;
+                    ChangeDestination(lugarDeTrabajo);
                 } else {
                     BuscarChamba();
                 }
                 break;
             case 2:
-                if (ManagerIA.instance.Clientef1[0] != null) {
-                    numpeticion = ManagerIA.instance.Clientef3[0].GetComponent<IACostumer>().peticion;
+                if (ManagerIA.instance.Clientef3.Count != 0) {
+                    costumer = ManagerIA.instance.Clientef3[0].GetComponent<IACostumer>();
+                    numpeticion = costumer.peticion;
+                    ChangeDestination(lugarDeTrabajo);
                 } else {
                     BuscarChamba();
                 }
@@ -198,19 +207,34 @@ public class IAVillager : MonoBehaviour {
         }
     }
 
-    public IEnumerator Trabajo()
-    {
+    public IEnumerator Trabajo() {
 
         Debug.Log("Trabajando");
-        
+
 
         yield return new WaitForSeconds(5);
 
         Debug.Log("Trabajo hecho");
-
-        ChangeState(IAStatesV.Walk);
+        ChangeDestination(lugarentrega);
         CheckState();
 
     }
+    public IEnumerator Vendiendo() {
 
+        Debug.Log("Vendiendo");
+
+        yield return new WaitForSeconds(5);
+
+        costumer.ChangeState(ManagerIA.IACostumer.Buyed);
+
+        chambeando = false;
+        ChangeState(IAStatesV.None);
+
+
+    }
+
+    private void ChangeDestination(Transform dest) {
+        Destino = dest;
+        ChangeState(IAStatesV.Walk);
+    }
 }
