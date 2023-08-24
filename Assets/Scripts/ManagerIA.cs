@@ -51,7 +51,7 @@ public class ManagerIA : MonoBehaviour
     //Decide si spawnear o no un cliente
     public void isnt() {
         a = Random.Range(3, 5);
-        print(a);
+        //print(a);
 
         if ( (MaxCostumersAvailables > 0) && ((Clientef1.Count + Clientef2.Count + Clientef3.Count) <= 25)) {
 

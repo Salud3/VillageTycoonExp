@@ -16,6 +16,7 @@ public class IACostumer : MonoBehaviour
 
     [Header("Variables")]
     public bool comprado;
+    public bool atendido;
     public int numDeFila = 0;
     public int peticion = 0;
 
@@ -98,7 +99,13 @@ public class IACostumer : MonoBehaviour
         }
     }
 
+    //recibe su compra
+    public void CompraLista() {
+        comprado = true;
+        ChangeState(ManagerIA.IACostumer.Buyed);
 
+
+    }
 
 
     public void ChangeState(ManagerIA.IACostumer newstate)
@@ -121,7 +128,7 @@ public class IACostumer : MonoBehaviour
 
         if(comprado && other.tag == "SalidaCliente")
         {
-            Destroy(this,0.5f);
+            Destroy(this.gameObject,0.5f);
         } else {
             Debug.Log("Intentado Destruir");
         }
@@ -130,12 +137,12 @@ public class IACostumer : MonoBehaviour
     private void OnTriggerExit(Collider other) {
 
         if (other.tag == "LugarCompra") {
+            this.gameObject.transform.parent.SetParent(null);
             for (int i = 0; i < DestinoCompra.childCount; i++) {
 
                 DestinoCompra.transform.GetChild(i).GetComponent<IACostumer>().CheckState();
 
             }
-            this.transform.parent.SetParent(null);
 
         }
 

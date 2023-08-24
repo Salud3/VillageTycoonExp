@@ -18,15 +18,16 @@ public class IAVillager : MonoBehaviour {
 
     [Header("Chambeando")]
     public bool chambeando = false;
-    public int numpeticion = 0;
+    //Detectar la peticion
     public int numfila = 0;
+    public int numfilaOld = 0;
     public int cFila1 = 0;
     public int cFila2 = 0;
     public int cFila3 = 0;
 
     [Header("NavMesh y cliente a que atender")]
     public NavMeshAgent agent;
-    IACostumer costumer;
+    public IACostumer costumer;
 
 
     private void Start() {
@@ -53,15 +54,18 @@ public class IAVillager : MonoBehaviour {
 
         } else {
 
-            numfila= 2;
+            numfila = 2;
         }
 
+        if (numfila == numfilaOld) {
+
+            numfila = Random.Range(0, numfilaOld);
+
+        }
+            chambeando = true;
+            lugarentrega = ManagerIA.instance.LugarEntregas[numfila];
+            ChangeDestination(ManagerIA.instance.LugarEntregas[numfila]);
         
-        chambeando = true;
-        lugarentrega = ManagerIA.instance.LugarEntregas[numfila];
-        ChangeDestination(ManagerIA.instance.LugarEntregas[numfila]);
-
-
     }
     //Asigna al villager un trabajo para trabajar en SOLO esa cosa
     public void AssingJob(int index)
@@ -124,9 +128,9 @@ public class IAVillager : MonoBehaviour {
                 agent.SetDestination(Destino.position);
                 break;
             case ManagerIA.IAStatesV.Working:
-                StartCoroutine(Trabajo());
                 break;
             case ManagerIA.IAStatesV.Carry:
+                agent.SetDestination(Destino.position);
                 break;
             case ManagerIA.IAStatesV.Selling:
                 break;
@@ -147,17 +151,18 @@ public class IAVillager : MonoBehaviour {
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "LugarEntrega" && currentState != IAStatesV.Carry) {
-            Debug.Log("A");
-            AsignarChamba(numfila);
+            // Debug.Log("A");
+            numfila = other.GetComponent<LugarDeEntrega>().numfila;
+            //AsignarChamba(numfila);
             ChangeDestination(lugarDeTrabajo);
 
         }else if (other.tag == "LugarEntrega" && currentState == IAStatesV.Carry) {
-            Debug.Log("B");
+           // Debug.Log("B");
 
             ChangeState(IAStatesV.Selling);
-
+            StartCoroutine("Vendiendo");
         } else {
-            Debug.Log("B");
+          //  Debug.Log("B");
 
         }
 
@@ -171,33 +176,32 @@ public class IAVillager : MonoBehaviour {
     }
 
     //conforme a la peticion asigna un lugar al cual ir a chambear, requiere un numero de fila
-    public void AsignarChamba(int a) {
+    /*public void AsignarChamba(int a) {
 
         switch (a) {
             case 0:
-                if (ManagerIA.instance.Clientef1.Count != 0) {
+                if (ManagerIA.instance.Clientef1.Count != 0 && !ManagerIA.instance.Clientef1[0].GetComponent<IACostumer>().atendido) {
                     costumer = ManagerIA.instance.Clientef1[0].GetComponent<IACostumer>();
-                    numpeticion = costumer.peticion;
-                    ChangeDestination(lugarDeTrabajo);
+                    Invoke("AsingDestCh",0.1f);
 
                 } else {
                     BuscarChamba();
                 }
                 break;
             case 1:
-                if (ManagerIA.instance.Clientef2.Count != 0) {
+                if (ManagerIA.instance.Clientef2.Count != 0 && !ManagerIA.instance.Clientef2[0].GetComponent<IACostumer>().atendido) {
                     costumer = ManagerIA.instance.Clientef2[0].GetComponent<IACostumer>();
-                    numpeticion = costumer.peticion;
-                    ChangeDestination(lugarDeTrabajo);
+                    Invoke("AsingDestCh", 0.1f);
+
                 } else {
                     BuscarChamba();
                 }
                 break;
             case 2:
-                if (ManagerIA.instance.Clientef3.Count != 0) {
+                if (ManagerIA.instance.Clientef3.Count != 0 && !ManagerIA.instance.Clientef3[0].GetComponent<IACostumer>().atendido) {
                     costumer = ManagerIA.instance.Clientef3[0].GetComponent<IACostumer>();
-                    numpeticion = costumer.peticion;
-                    ChangeDestination(lugarDeTrabajo);
+                    Invoke("AsingDestCh", 0.1f);
+
                 } else {
                     BuscarChamba();
                 }
@@ -205,7 +209,14 @@ public class IAVillager : MonoBehaviour {
             default:
                 break;
         }
-    }
+
+    }*/
+    /*public void AsingDestCh() {
+
+        costumer.atendido = true;
+        ChangeDestination(lugarDeTrabajo);
+
+    }*/
 
     public IEnumerator Trabajo() {
 
@@ -222,19 +233,25 @@ public class IAVillager : MonoBehaviour {
     public IEnumerator Vendiendo() {
 
         Debug.Log("Vendiendo");
-
+        numfilaOld = numfila;
         yield return new WaitForSeconds(5);
 
-        costumer.ChangeState(ManagerIA.IACostumer.Buyed);
-
+        costumer.CompraLista();
+        costumer = null;
         chambeando = false;
         ChangeState(IAStatesV.None);
-
 
     }
 
     private void ChangeDestination(Transform dest) {
         Destino = dest;
-        ChangeState(IAStatesV.Walk);
+
+        if (currentState == IAStatesV.Working) {
+            ChangeState(IAStatesV.Carry);
+        } else {
+            ChangeState(IAStatesV.Walk);
+
+        }
     }
+
 }
