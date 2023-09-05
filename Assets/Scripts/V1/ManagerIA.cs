@@ -38,7 +38,6 @@ public class ManagerIA : MonoBehaviour
     public List<GameObject> Farm3;
     public List<GameObject> Pescadores;
     public List<GameObject> Molineros;
-    public List<GameObject> Mineros;
     public List<GameObject> Costureros;
     public List<GameObject> Panaderos;
 
@@ -79,7 +78,7 @@ public class ManagerIA : MonoBehaviour
     //Spawnea un Aldeano y Añade al trabajo
     public void SummonVillager(int index)
     {
-        int b = Random.Range(0, 3);
+        int b = Random.Range(0, VillagerSpawn.Length);
 
         GameObject clone = Instantiate(Villager, VillagerSpawn[b].position, new Quaternion(0, 0, 0, 0));
 
@@ -102,12 +101,9 @@ public class ManagerIA : MonoBehaviour
                 Molineros.Add(clone);
                 break;
             case 5:
-                Mineros.Add(clone);
-                break;
-            case 6:
                 Costureros.Add(clone);
                 break;
-            case 7:
+            case 6:
                 Panaderos.Add(clone);
                 break;
             default:

@@ -13,7 +13,7 @@ public class IAVillager : MonoBehaviour {
     [Header("Tipo de Trabajo")]
     public ManagerIA.TipoAldeano tipoAldeano;
     public Transform lugarDeTrabajo;
-    public Transform lugarentrega;
+    public Transform Puesto;
     public Transform Destino;
 
     [Header("Chambeando")]
@@ -30,43 +30,11 @@ public class IAVillager : MonoBehaviour {
     public IACostumer costumer;
 
 
-    private void Start() {
-        if (!chambeando) {
-            BuscarChamba();
-        }
-    }
-    //Va a una de las filas a Buscar chamba
     public void BuscarChamba() {
-        cFila1 = ManagerIA.instance.Clientef1.Count;
-        cFila2 = ManagerIA.instance.Clientef2.Count;
-        cFila3 = ManagerIA.instance.Clientef3.Count;
+        chambeando = true;
 
-        bool a = cFila1 > cFila2;
-        bool b = cFila2 > cFila3;
-
-        if (a) {
-
-            numfila = 0;
-
-        } else if (b) {
-
-            numfila = 1;
-
-        } else {
-
-            numfila = 2;
-        }
-
-        if (numfila == numfilaOld) {
-
-            numfila = Random.Range(0, numfilaOld);
-
-        }
-            chambeando = true;
-            lugarentrega = ManagerIA.instance.LugarEntregas[numfila];
-            ChangeDestination(ManagerIA.instance.LugarEntregas[numfila]);
-        
     }
+    
     //Asigna al villager un trabajo para trabajar en SOLO esa cosa
     public void AssingJob(int index)
     {
@@ -94,19 +62,12 @@ public class IAVillager : MonoBehaviour {
                 lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             case 5:
-                tipoAldeano = TipoAldeano.Miner;
-                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
-                break;
-            case 6:
                 tipoAldeano = TipoAldeano.Costurero;
                 lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
-            case 7:
+                
+            case 6:
                 tipoAldeano = TipoAldeano.Panadero;
-                lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
-                break;
-            case 8:
-                tipoAldeano = TipoAldeano.Farm1;
                 lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[index];
                 break;
             default:
@@ -122,7 +83,7 @@ public class IAVillager : MonoBehaviour {
     public void CheckState() {
         switch (currentState) {
             case ManagerIA.IAStatesV.None:
-                BuscarChamba();
+                agent.SetDestination(Destino.position);
                 break;
             case ManagerIA.IAStatesV.Walk:
                 agent.SetDestination(Destino.position);
@@ -210,8 +171,8 @@ public class IAVillager : MonoBehaviour {
                 break;
         }
 
-    }*/
-    /*public void AsingDestCh() {
+    }
+    public void AsingDestCh() {
 
         costumer.atendido = true;
         ChangeDestination(lugarDeTrabajo);
@@ -226,7 +187,7 @@ public class IAVillager : MonoBehaviour {
         yield return new WaitForSeconds(5);
 
         Debug.Log("Trabajo hecho");
-        ChangeDestination(lugarentrega);
+        ChangeDestination(Puesto);
         CheckState();
 
     }
