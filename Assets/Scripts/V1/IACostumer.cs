@@ -18,12 +18,18 @@ public class IACostumer : MonoBehaviour
     public bool comprado;
     public bool atendido;
     public int numDeFila = 0;
-    public int peticion = 0;
+    public int[] peticion;
 
     private void Awake() {
 
         numDeFila = Random.Range(0, 3);
-        peticion = Random.Range(0, ManagerIA.instance.EstacionesDesbloqueadas);
+        int randnum = Random.Range(0, 4);
+        peticion = new int[randnum];
+        for (int i = 0; i < peticion.Length; i++) {
+
+            peticion[i] = Random.Range(0, ManagerIA.instance.EstacionesDesbloqueadas);
+
+        }
         DestinoCompra = ManagerIA.instance.DestinosDeComprador[numDeFila];
         SwitchFila();
         DestinoSalida = ManagerIA.instance.SalidasDeComprador[Random.Range(0, 3)];
@@ -47,15 +53,15 @@ public class IACostumer : MonoBehaviour
                 switch (numDeFila) {
                     case 0:
                         a += ManagerIA.instance.Clientef1.Count;
-                        Debug.Log(this.gameObject + "Pos en fila: " + a);
+                        //Debug.Log(this.gameObject + "Pos en fila: " + a);
                         break;
                     case 1:
                         a += ManagerIA.instance.Clientef2.Count;
-                        Debug.Log(this.gameObject + "Pos en fila: " + a);
+                        //Debug.Log(this.gameObject + "Pos en fila: " + a);
                         break;
                     case 2:
                         a += ManagerIA.instance.Clientef3.Count ;
-                        Debug.Log(this.gameObject +"Pos en fila: " +a);
+                        //Debug.Log(this.gameObject +"Pos en fila: " +a);
                         break;
                     default:
                         break;
@@ -128,6 +134,7 @@ public class IACostumer : MonoBehaviour
 
         if(comprado && other.tag == "SalidaCliente")
         {
+            ManagerIA.instance.MaxCostumersAvailables++;
             Destroy(this.gameObject,0.5f);
         } else {
             Debug.Log("Intentado Destruir");

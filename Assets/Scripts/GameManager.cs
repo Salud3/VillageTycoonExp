@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public VillagerClass[] LevelStation;
+
     void Start()
     {
-        
+        LevelStation = SaveSystem.Instance.LevelStation;
     }
 
     public void Inicio()

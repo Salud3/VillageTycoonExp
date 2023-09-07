@@ -6,10 +6,11 @@ using UnityEngine;
 public class ManagerIA : MonoBehaviour
 {
     public enum IAStatesV {None, Walk, Working, Carry, Selling}
-    public enum TipoAldeano { Farm1, Farm2, Farm3, Pescador, Molinero, Miner, Costurero, Panadero }
-
+    public enum TipoAldeano { Farm1, Farm2, Farm3, Pescador, Molinero, Costurero, Panadero }
     public enum IACostumer {None, Walk, Waiting, Buyed}
+
     public static ManagerIA instance;
+
     [Header("Niveles")]
     public int EstacionesDesbloqueadas;
     int a = 0;
@@ -24,7 +25,6 @@ public class ManagerIA : MonoBehaviour
     public List<GameObject> Clientef3;
 
     public int MaxCostumersAvailables;
-    public int Nivel;
 
     [Header("Lugares Costumer y objeto instance")]
     
@@ -33,13 +33,13 @@ public class ManagerIA : MonoBehaviour
     public Transform[] LugarEntregas = new Transform[3];
     public Transform[] VillagerTrabajos = new Transform[8];
 
-    public List<GameObject> Farm1;
-    public List<GameObject> Farm2;
-    public List<GameObject> Farm3;
-    public List<GameObject> Pescadores;
-    public List<GameObject> Molineros;
-    public List<GameObject> Costureros;
-    public List<GameObject> Panaderos;
+    public GameObject Farm1;
+    public GameObject Farm2;
+    public GameObject Farm3;
+    public GameObject Pescadores;
+    public GameObject Molineros;
+    public GameObject Costureros;
+    public GameObject Panaderos;
 
 
     void Start()
@@ -75,42 +75,79 @@ public class ManagerIA : MonoBehaviour
         Invoke("isnt", 1f);
     }
 
+    
     //Spawnea un Aldeano y Añade al trabajo
-    public void SummonVillager(int index)
-    {
-        int b = Random.Range(0, VillagerSpawn.Length);
-
-        GameObject clone = Instantiate(Villager, VillagerSpawn[b].position, new Quaternion(0, 0, 0, 0));
-
-        clone.GetComponent<IAVillager>().AssingJob(index);
-
-        switch (index) {
+    public void LevelUp(int Job) {
+        switch (Job) {
             case 0:
-                Farm1.Add(clone);
+                if (Farm1 == null) {
+                    GameObject clone = SummonV(Job);
+                    Farm1 = clone;
+                } else {
+                    Farm1.GetComponent<IAVillager>().levelstation++;
+                }
                 break;
             case 1:
-                Farm2.Add(clone);
+                if (Farm2 == null) {
+                    GameObject clone = SummonV(Job);
+                    Farm2 = clone;
+                } else {
+                    Farm2.GetComponent<IAVillager>().levelstation++;
+                }
                 break;
             case 2:
-                Farm3.Add(clone);
+                if (Farm3 == null) {
+                    GameObject clone = SummonV(Job);
+                    Farm3 = clone;
+                } else {
+                    Farm3.GetComponent<IAVillager>().levelstation++;
+                }
                 break;
             case 3:
-                Pescadores.Add(clone);
+                if (Panaderos == null) {
+                    GameObject clone = SummonV(Job);
+                    Panaderos = clone;
+                } else {
+                    Panaderos.GetComponent<IAVillager>().levelstation++;
+                }
                 break;
             case 4:
-                Molineros.Add(clone);
+                if (Costureros == null) {
+                    GameObject clone = SummonV(Job);
+                    Costureros = clone;
+                } else {
+                    Costureros.GetComponent<IAVillager>().levelstation++;
+                }
                 break;
             case 5:
-                Costureros.Add(clone);
+                if (Pescadores == null) {
+                    GameObject clone = SummonV(Job);
+                    Pescadores = clone;
+                } else {
+                    Pescadores.GetComponent<IAVillager>().levelstation++;
+                }
                 break;
             case 6:
-                Panaderos.Add(clone);
+                if (Molineros == null) {
+                    GameObject clone = SummonV(Job);
+                    Molineros = clone;
+                } else {
+                    Molineros.GetComponent<IAVillager>().levelstation++;
+                }
                 break;
             default:
-                Farm1.Add(clone);
+                Debug.Log("Error summon");
                 break;
         }
 
     }
-    
+
+    private GameObject SummonV(int Job) {
+        int b = Random.Range(0, VillagerSpawn.Length);
+
+        GameObject clone = Instantiate(Villager, VillagerSpawn[b].position, new Quaternion(0, 0, 0, 0));
+
+        clone.GetComponent<IAVillager>().AssingJob(Job);
+        return clone;
+    }
 }    
