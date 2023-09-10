@@ -11,7 +11,7 @@ public class SaveSystem : MonoBehaviour
 
     [Header("Info Player")]
     public VillagerClass[] LevelStation;
-    public float Money;
+    public WalletClass[] wallet;
 
 
     void Awake()
@@ -22,10 +22,16 @@ public class SaveSystem : MonoBehaviour
 
     public void ReadInfo()
     {
-        string url = Application.streamingAssetsPath + "/dataPlayer.json";
+        string url = Application.streamingAssetsPath + "/villagerInfo.json";
         string json = File.ReadAllText(url);
 
         LevelStation = JsonHelper.FromJson<VillagerClass>(json);
+
+        string urll = Application.streamingAssetsPath + "/playerInfo.json";
+        string jsonn = File.ReadAllText(urll);
+
+        wallet = JsonHelper.FromJson<WalletClass>(jsonn);
+
 
     }
     public void Saveall()
@@ -50,13 +56,13 @@ public class SaveSystem : MonoBehaviour
         }
 
         string jjson = JsonHelper.ToJson(LevelStation, true);
-        string uurl = Application.streamingAssetsPath + "/dataOpUp.json";
+        string uurl = Application.streamingAssetsPath + "/villagerInfo.json";
         File.WriteAllText(uurl, jjson);
-        print("Save bools " + jjson);
-
+        print("Save level stations" + jjson);
 
     }
-    public void ReGenVillagers()
+
+    public void ReGenInfo()
     {
         //regen infoPlayers
         LevelStation = new VillagerClass[8];
@@ -70,11 +76,15 @@ public class SaveSystem : MonoBehaviour
         LevelStation[7] = new VillagerClass(0, false);
 
         string json = JsonHelper.ToJson(LevelStation, true);
-        string url = Application.streamingAssetsPath + "/dataPlayer.json";
+        string url = Application.streamingAssetsPath + "/villagerInfo.json";
         File.WriteAllText(url, json);
+        
+        wallet = new WalletClass[1];
+        wallet[0] = new WalletClass("Wally",0);
 
-        Money = 0;
-
+        string jsonn = JsonHelper.ToJson(wallet, true);
+        string urll = Application.streamingAssetsPath + "/playerInfo.json";
+        File.WriteAllText(urll, jsonn);
 
     }
 

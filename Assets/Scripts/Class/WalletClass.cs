@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[System.Serializable]
 
-public class WalletClass : MonoBehaviour
+
+public class WalletClass
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int mon;
+    public string nae;
 
-    // Update is called once per frame
-    void Update()
+    public WalletClass (string username,int money)
     {
-        
-    }
+        mon = money;
+        nae = username;
+    } 
 }

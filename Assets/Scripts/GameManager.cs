@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public WalletClass[] wallet;
     public VillagerClass[] LevelStation;
 
     void Start()
     {
+        wallet = SaveSystem.Instance.wallet;
         LevelStation = SaveSystem.Instance.LevelStation;
     }
 

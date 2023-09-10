@@ -32,6 +32,7 @@ public class ManagerIA : MonoBehaviour
     public Transform[] VillagerSpawn = new Transform[3];
     public Transform[] LugarEntregas = new Transform[3];
     public Transform[] VillagerTrabajos = new Transform[8];
+    public Transform[] VillagerReposo = new Transform[8];
 
     public GameObject Farm1;
     public GameObject Farm2;
