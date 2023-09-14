@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class WalletClass
 {
-    public int mon;
+    public float mon;
     public string nae;
 
-    public WalletClass (string username,int money)
+    public WalletClass (string username,float money)
     {
         mon = money;
         nae = username;

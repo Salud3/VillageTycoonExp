@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class IACostumer : MonoBehaviour
 {
     [Header("Comprador IA")]
-    public ManagerIA.IACostumer CurrentState;
-    public ManagerIA.IACostumer oldState;
+    public ManagerIA.IACostStates CurrentState;
+    public ManagerIA.IACostStates oldState;
 
     [Header("NavMesh")]
     public NavMeshAgent agent;
@@ -17,24 +17,13 @@ public class IACostumer : MonoBehaviour
     [Header("Variables")]
     public bool comprado;
     public bool atendido;
-    public int numDeFila = 0;
+    public int numfila;
     public int[] peticion;
 
-    private void Awake() {
+    private void Awake() 
+    {
 
-        numDeFila = Random.Range(0, 3);
-        int randnum = Random.Range(0, 4);
-        peticion = new int[randnum];
-        for (int i = 0; i < peticion.Length; i++) {
-
-            peticion[i] = Random.Range(0, ManagerIA.instance.EstacionesDesbloqueadas);
-
-        }
-        DestinoCompra = ManagerIA.instance.DestinosDeComprador[numDeFila];
-        SwitchFila();
-        DestinoSalida = ManagerIA.instance.SalidasDeComprador[Random.Range(0, 3)];
-
-        ChangeState(ManagerIA.IACostumer.None);
+        ChangeState(ManagerIA.IACostStates.None);
     
     }
     //Asigna al estado actual una accion
@@ -43,14 +32,14 @@ public class IACostumer : MonoBehaviour
         
         switch (CurrentState)
         {
-            case ManagerIA.IACostumer.None:
-                ChangeState(ManagerIA.IACostumer.Walk);
+            case ManagerIA.IACostStates.None:
+                ChangeState(ManagerIA.IACostStates.Walk);
                 break;
-            case ManagerIA.IACostumer.Walk:
+            case ManagerIA.IACostStates.Walk:
                 //Constante Guia para la fila
                 int a = 2;
                 //La constante se le suma la cantidad de clientes
-                switch (numDeFila) {
+                switch (numfila) {
                     case 0:
                         a += ManagerIA.instance.Clientef1.Count;
                         //Debug.Log(this.gameObject + "Pos en fila: " + a);
@@ -60,10 +49,24 @@ public class IACostumer : MonoBehaviour
                         //Debug.Log(this.gameObject + "Pos en fila: " + a);
                         break;
                     case 2:
-                        a += ManagerIA.instance.Clientef3.Count ;
+                        a += ManagerIA.instance.Clientef3.Count;
                         //Debug.Log(this.gameObject +"Pos en fila: " +a);
                         break;
+                    case 3:
+                        a += ManagerIA.instance.Clientef4.Count;
+
+                        break;
+                    case 4:
+                        a += ManagerIA.instance.Clientef5.Count;
+                        break;
+                    case 5:
+                        a += ManagerIA.instance.Clientef6.Count;
+                        break;
+                    case 6:
+                        a += ManagerIA.instance.Clientef7.Count;
+                        break;
                     default:
+                        print("Error");
                         break;
                 }
 
@@ -77,30 +80,14 @@ public class IACostumer : MonoBehaviour
                 }
 
                 break;
-            case ManagerIA.IACostumer.Waiting:
+            case ManagerIA.IACostStates.Waiting:
                 print("Esperanding");
                 break;
-            case ManagerIA.IACostumer.Buyed:
+            case ManagerIA.IACostStates.Buyed:
                 agent.SetDestination(DestinoSalida.position);
                 break;
             default:
-                ChangeState(ManagerIA.IACostumer.Walk);
-                break;
-        }
-    }
-    //Añade al cliente a una fila
-    public void SwitchFila() {
-        switch (numDeFila) {
-            case 0:
-                ManagerIA.instance.Clientef1.Add(this.gameObject);
-                break;
-            case 1:
-                ManagerIA.instance.Clientef2.Add(this.gameObject);
-                break;
-            case 2:
-                ManagerIA.instance.Clientef3.Add(this.gameObject);
-                break;
-            default:
+                ChangeState(ManagerIA.IACostStates.Walk);
                 break;
         }
     }
@@ -108,13 +95,13 @@ public class IACostumer : MonoBehaviour
     //recibe su compra
     public void CompraLista() {
         comprado = true;
-        ChangeState(ManagerIA.IACostumer.Buyed);
+        ChangeState(ManagerIA.IACostStates.Buyed);
 
 
     }
 
 
-    public void ChangeState(ManagerIA.IACostumer newstate)
+    public void ChangeState(ManagerIA.IACostStates newstate)
     {
         CurrentState = newstate;
         Debug.Log("Cambio de estado Cliente a " + newstate);
@@ -128,7 +115,7 @@ public class IACostumer : MonoBehaviour
         {
             this.gameObject.transform.SetParent(other.gameObject.transform);
 
-            ChangeState(ManagerIA.IACostumer.Waiting);
+            ChangeState(ManagerIA.IACostStates.Waiting);
             
         }
 
@@ -136,6 +123,7 @@ public class IACostumer : MonoBehaviour
         {
             ManagerIA.instance.MaxCostumersAvailables++;
             Destroy(this.gameObject,0.5f);
+
         } else {
             Debug.Log("Intentado Destruir");
         }

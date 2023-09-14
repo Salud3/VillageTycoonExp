@@ -2,35 +2,51 @@
     "Items": [
         {
             "Unlock": false,
-            "LevelStation": 0
+            "LevelStation": 0,
+            "earning": 15.0,
+            "cost": 0.0
         },
         {
             "Unlock": false,
-            "LevelStation": 0
+            "LevelStation": 0,
+            "earning": 25.0,
+            "cost": 75.0
         },
         {
             "Unlock": false,
-            "LevelStation": 0
+            "LevelStation": 0,
+            "earning": 35.0,
+            "cost": 105.0
         },
         {
             "Unlock": false,
-            "LevelStation": 0
+            "LevelStation": 0,
+            "earning": 55.0,
+            "cost": 165.0
         },
         {
             "Unlock": false,
-            "LevelStation": 0
+            "LevelStation": 0,
+            "earning": 85.0,
+            "cost": 255.0
         },
         {
             "Unlock": false,
-            "LevelStation": 0
+            "LevelStation": 0,
+            "earning": 95.0,
+            "cost": 285.0
         },
         {
             "Unlock": false,
-            "LevelStation": 0
+            "LevelStation": 0,
+            "earning": 105.0,
+            "cost": 315.0
         },
         {
             "Unlock": false,
-            "LevelStation": 0
+            "LevelStation": 0,
+            "earning": 150.0,
+            "cost": 450.0
         }
     ]
 }

@@ -31,7 +31,13 @@ public class IAVillager : MonoBehaviour {
 
 
     public void Start() {
+
+        Invoke("inicio", 01f);
+    }
+
+    private void incio() {
         ChangeDestination(lugarReposo);
+
     }
 
     public void BuscarChamba() {

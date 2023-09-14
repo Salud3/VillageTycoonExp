@@ -7,10 +7,15 @@ public class VillagerClass
 {
     public bool Unlock;
     public int LevelStation;
-    public VillagerClass(int CVill,bool locked)
+    public float earning;
+    public float cost;
+
+    public VillagerClass(int CVill, int costt,float Moneyearn, bool locked)
     {
         LevelStation = CVill;
         Unlock = locked;
+        earning = Moneyearn;
+        cost = costt;
     }
 
 }

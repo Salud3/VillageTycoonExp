@@ -10,6 +10,8 @@ public class SaveSystem : MonoBehaviour
     public static SaveSystem Instance;
 
     [Header("Info Player")]
+    public string namepl;
+    public float moneyD;
     public VillagerClass[] LevelStation;
     public WalletClass[] wallet;
 
@@ -37,22 +39,13 @@ public class SaveSystem : MonoBehaviour
     public void Saveall()
     {
         Save();
-        Debug.Log("Salvado");
     }
 
     private void Save()
     {
-        for (int i = 0; i < LevelStation.Length; i++)
+        for (int i = 0; i < LevelStation.Length; i++) 
         {
-            LevelStation[i].LevelStation = VillagerManager.instance.Farm1.Count;
-            LevelStation[i].LevelStation = VillagerManager.instance.Farm2.Count;
-            LevelStation[i].LevelStation = VillagerManager.instance.Farm3.Count;
-            LevelStation[i].LevelStation = VillagerManager.instance.Pescadores.Count;
-            LevelStation[i].LevelStation = VillagerManager.instance.Molineros.Count;
-            LevelStation[i].LevelStation = VillagerManager.instance.Mineros.Count;
-            LevelStation[i].LevelStation = VillagerManager.instance.Costureros.Count;
-            LevelStation[i].LevelStation = VillagerManager.instance.Panaderos.Count;
-            LevelStation[i].LevelStation = VillagerManager.instance.Farm1.Count;
+            LevelStation[i].LevelStation = GameManager.instance.LevelStation[i].LevelStation;
         }
 
         string jjson = JsonHelper.ToJson(LevelStation, true);
@@ -60,20 +53,29 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(uurl, jjson);
         print("Save level stations" + jjson);
 
+        wallet[0] = new WalletClass(namepl, moneyD);
+
+        string jsonn = JsonHelper.ToJson(wallet, true);
+        string urll = Application.streamingAssetsPath + "/playerInfo.json";
+        File.WriteAllText(urll, jsonn);
+
+        Debug.Log("Salvado");
+
+
     }
 
     public void ReGenInfo()
     {
         //regen infoPlayers
         LevelStation = new VillagerClass[8];
-        LevelStation[0] = new VillagerClass(0, false);
-        LevelStation[1] = new VillagerClass(0, false);
-        LevelStation[2] = new VillagerClass(0, false);
-        LevelStation[3] = new VillagerClass(0, false);
-        LevelStation[4] = new VillagerClass(0, false);
-        LevelStation[5] = new VillagerClass(0, false);
-        LevelStation[6] = new VillagerClass(0, false);
-        LevelStation[7] = new VillagerClass(0, false);
+        LevelStation[0] = new VillagerClass(0, 0, 15, false);
+        LevelStation[1] = new VillagerClass(0, 75, 25, false);
+        LevelStation[2] = new VillagerClass(0, 105, 35, false);
+        LevelStation[3] = new VillagerClass(0, 165, 55, false);
+        LevelStation[4] = new VillagerClass(0, 255, 85, false);
+        LevelStation[5] = new VillagerClass(0, 285, 95, false);
+        LevelStation[6] = new VillagerClass(0, 315, 105, false);
+        LevelStation[7] = new VillagerClass(0, 450, 150, false);
 
         string json = JsonHelper.ToJson(LevelStation, true);
         string url = Application.streamingAssetsPath + "/villagerInfo.json";

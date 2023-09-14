@@ -4,15 +4,28 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     public WalletClass[] wallet;
     public VillagerClass[] LevelStation;
 
-    void Start()
+    private void Awake()
     {
+        instance = this;
+    }
+    private void Start() {
+
         wallet = SaveSystem.Instance.wallet;
         LevelStation = SaveSystem.Instance.LevelStation;
     }
+    private void Update() {
+        
+    }
 
+    public void costStatio(float cost) {
+
+        wallet[0].mon -= cost;
+
+    }
     public void Inicio()
     {
 
