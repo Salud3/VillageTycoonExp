@@ -10,10 +10,10 @@ public class SaveSystem : MonoBehaviour
     public static SaveSystem Instance;
 
     [Header("Info Player")]
-    public string namepl;
-    public float moneyD;
     public VillagerClass[] LevelStation;
     public WalletClass[] wallet;
+    public string namepl;
+    public float moneyD;
 
 
     void Awake()
@@ -34,7 +34,7 @@ public class SaveSystem : MonoBehaviour
 
         wallet = JsonHelper.FromJson<WalletClass>(jsonn);
 
-
+        
     }
     public void Saveall()
     {
@@ -68,7 +68,7 @@ public class SaveSystem : MonoBehaviour
     {
         //regen infoPlayers
         LevelStation = new VillagerClass[8];
-        LevelStation[0] = new VillagerClass(0, 0, 15, false);
+        LevelStation[0] = new VillagerClass(0, 10, 15, false);
         LevelStation[1] = new VillagerClass(0, 75, 25, false);
         LevelStation[2] = new VillagerClass(0, 105, 35, false);
         LevelStation[3] = new VillagerClass(0, 165, 55, false);

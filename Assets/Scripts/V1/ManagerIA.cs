@@ -54,6 +54,8 @@ public class ManagerIA : MonoBehaviour
         Invoke("asd",0.1f);
     }
 
+    
+
     public void asd() {
         for (int i = 0; i < GameManager.instance.LevelStation.Length; i++) {
             if (GameManager.instance.LevelStation[i].Unlock) {
@@ -85,9 +87,7 @@ public class ManagerIA : MonoBehaviour
         int b = Random.Range(0, EntradasDeComprador.Length);
         GameObject cclone =  Instantiate(costumer, EntradasDeComprador[b].position , new Quaternion(0,0,0,0));      MaxCostumersAvailables--;
         int awa = Random.Range(0, EstacionesDesbloqueadas - 1);
-        cclone.GetComponent<IACostumer>().numfila = awa; 
-        cclone.GetComponent<IACostumer>().DestinoCompra = DestinosDeComprador[awa];
-        cclone.GetComponent<IACostumer>().DestinoSalida = SalidasDeComprador[Random.Range(0, SalidasDeComprador.Length)];
+        cclone.GetComponent<IACostumer>().Assing(DestinosDeComprador[awa], awa, SalidasDeComprador[Random.Range(0, SalidasDeComprador.Length)]);
 
         switch (awa) {
             case 0:
@@ -133,64 +133,65 @@ public class ManagerIA : MonoBehaviour
 
         if (GameManager.instance.wallet[0].mon >= GameManager.instance.LevelStation[Job].cost) 
         {
-            GameManager.instance.wallet[0].mon -= GameManager.instance.LevelStation[Job].cost;
+            GameManager.instance.costStatio(GameManager.instance.LevelStation[Job].cost);
 
             switch (Job) {
                 case 0:
                     if (Farm1 == null) {
                         GameObject clone = SummonV(Job);
                         Farm1 = clone;
-                    } else {
-                        Farm1.GetComponent<IAVillager>().levelstation++;
-                    }
+                    } 
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
+
                     break;
                 case 1:
                     if (Farm2 == null) {
                         GameObject clone = SummonV(Job);
                         Farm2 = clone;
-                    } else {
-                        Farm2.GetComponent<IAVillager>().levelstation++;
                     }
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
                     break;
                 case 2:
                     if (Farm3 == null) {
                         GameObject clone = SummonV(Job);
                         Farm3 = clone;
-                    } else {
-                        Farm3.GetComponent<IAVillager>().levelstation++;
                     }
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
                     break;
                 case 3:
                     if (Panaderos == null) {
                         GameObject clone = SummonV(Job);
                         Panaderos = clone;
-                    } else {
-                        Panaderos.GetComponent<IAVillager>().levelstation++;
                     }
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
                     break;
                 case 4:
                     if (Costureros == null) {
                         GameObject clone = SummonV(Job);
                         Costureros = clone;
-                    } else {
-                        Costureros.GetComponent<IAVillager>().levelstation++;
                     }
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
                     break;
                 case 5:
                     if (Pescadores == null) {
                         GameObject clone = SummonV(Job);
                         Pescadores = clone;
-                    } else {
-                        Pescadores.GetComponent<IAVillager>().levelstation++;
                     }
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
                     break;
                 case 6:
                     if (Molineros == null) {
                         GameObject clone = SummonV(Job);
                         Molineros = clone;
-                    } else {
-                        Molineros.GetComponent<IAVillager>().levelstation++;
                     }
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
                     break;
                 default:
                     Debug.Log("Error summon");

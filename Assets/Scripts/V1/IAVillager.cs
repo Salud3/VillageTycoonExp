@@ -20,7 +20,6 @@ public class IAVillager : MonoBehaviour {
     [Header("Chambeando")]
     public bool chambeando = false;
     //Detectar la peticion
-    public int levelstation;
     public int VelWalk;
     public int VelWork;
     public int VelSell;
@@ -143,8 +142,9 @@ public class IAVillager : MonoBehaviour {
     public IEnumerator Vendiendo() {
 
         Debug.Log("Vendiendo");
+        Debug.Log("Venta de " + (int)tipoAldeano + " " + tipoAldeano);
         yield return new WaitForSeconds(5);
-
+        GameManager.instance.Venta((int)tipoAldeano);
         costumer.CompraLista();
         costumer = null;
         chambeando = false;

@@ -23,9 +23,18 @@ public class IACostumer : MonoBehaviour
     private void Awake() 
     {
 
-        ChangeState(ManagerIA.IACostStates.None);
+        //ChangeState(ManagerIA.IACostStates.None);
     
     }
+
+    public void Assing(Transform lugarcompra, int numfila, Transform salida)
+    {
+        DestinoCompra = lugarcompra;
+        this.numfila = numfila;
+        DestinoSalida = salida;
+        ChangeState(ManagerIA.IACostStates.None);
+    }
+
     //Asigna al estado actual una accion
     public void CheckState()
     {
@@ -37,7 +46,7 @@ public class IACostumer : MonoBehaviour
                 break;
             case ManagerIA.IACostStates.Walk:
                 //Constante Guia para la fila
-                int a = 2;
+                float a = 2.5f;
                 //La constante se le suma la cantidad de clientes
                 switch (numfila) {
                     case 0:
@@ -71,12 +80,15 @@ public class IACostumer : MonoBehaviour
                 }
 
                 //se le asigna destino a todos los clientes
-                if (a > 3) {
+                
+                if (a < 3)
+                {
 
-                    agent.SetDestination(DestinoCompra.position - new Vector3(0, 0, (int)a));
-
-                } else {
                     agent.SetDestination(DestinoCompra.position);
+
+                }
+                else {
+                    agent.SetDestination(DestinoCompra.position - new Vector3(0, 0, (int)a));
                 }
 
                 break;
@@ -124,7 +136,8 @@ public class IACostumer : MonoBehaviour
             ManagerIA.instance.MaxCostumersAvailables++;
             Destroy(this.gameObject,0.5f);
 
-        } else {
+        } else if (!comprado && other.tag == "SalidaCliente")
+        {
             Debug.Log("Intentado Destruir");
         }
 
