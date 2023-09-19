@@ -8,10 +8,13 @@ public class WalletClass
 {
     public float mon;
     public string nae;
-
-    public WalletClass (string username,float money)
+    public bool started;
+    public int levelV;
+    public WalletClass (string username,float money, bool start, int levelv)
     {
         mon = money;
         nae = username;
+        started = start;
+        levelV = levelv;
     } 
 }

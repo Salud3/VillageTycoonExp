@@ -6,7 +6,7 @@ using UnityEngine;
 public class ManagerIA : MonoBehaviour
 {
     public enum IAStatesV {None, Walk, Working, Carry, Selling}
-    public enum TipoAldeano { Farm1, Farm2, Farm3, Pescador, Molinero, Costurero, Panadero }
+    public enum TipoAldeano { Farm1, Farm2, Farm3, Costurero, Panadero, Pescador, Molinero }
     public enum IACostStates {None, Walk, Waiting, Buyed}
 
     public static ManagerIA instance;
@@ -14,6 +14,7 @@ public class ManagerIA : MonoBehaviour
     [Header("Niveles")]
     public int EstacionesDesbloqueadas;
     int a = 0;
+    public int leveltotal;
     [Header("Lugares Costumer y objeto instance")]
     public GameObject costumer;
     public Transform[] EntradasDeComprador = new Transform[3];
@@ -34,9 +35,9 @@ public class ManagerIA : MonoBehaviour
     
     public GameObject Villager;
     public Transform[] VillagerSpawn = new Transform[3];
-    public Transform[] LugarEntregas = new Transform[3];
-    public Transform[] VillagerTrabajos = new Transform[8];
-    public Transform[] VillagerReposo = new Transform[8];
+    public Transform[] LugarEntregas = new Transform[7];
+    public Transform[] VillagerTrabajos = new Transform[7];
+    public Transform[] VillagerReposo = new Transform[7];
 
     public GameObject Farm1;
     public GameObject Farm2;
@@ -46,33 +47,46 @@ public class ManagerIA : MonoBehaviour
     public GameObject Pescadores;
     public GameObject Molineros;
 
+    public GameObject[] Estructuras = new GameObject[7];
 
     void Start()
     {
         instance = this;
 
-        Invoke("asd",0.1f);
+        Invoke("Inic",0.1f);
     }
 
-    
-
-    public void asd() {
+    public void Inic() {
         for (int i = 0; i < GameManager.instance.LevelStation.Length; i++) {
             if (GameManager.instance.LevelStation[i].Unlock) {
                 EstacionesDesbloqueadas++;
+                SpawnVillagerBuyed(i);
+
             }
         }
-
+        LevelTotall();
 
         isnt();
     }
 
     //Decide si spawnear o no un cliente
-    public void isnt() {
-        a = Random.Range(3, 5);
-        //print(a);
+    public void isnt() 
+    {
+        
 
-        if ( (MaxCostumersAvailables > 0) && ((Clientef1.Count + Clientef2.Count + Clientef3.Count) <= 25)) {
+        switch (leveltotal)
+        {
+            case >= 25:
+                a = Random.Range(0, 3);
+                break;
+            case <= 25:
+                a = Random.Range(0, 8);
+                break;
+        }
+        print("tiempo de espera"+a);
+
+        if ( ((MaxCostumersAvailables > 0) && ((Clientef1.Count + Clientef2.Count + Clientef3.Count) <= 25)) && GameManager.instance.wallet[0].started)
+        {
 
             Invoke("SummonCostumer", a);
         
@@ -85,8 +99,8 @@ public class ManagerIA : MonoBehaviour
     //Spawnea un Cliente
     public void SummonCostumer() {
         int b = Random.Range(0, EntradasDeComprador.Length);
-        GameObject cclone =  Instantiate(costumer, EntradasDeComprador[b].position , new Quaternion(0,0,0,0));      MaxCostumersAvailables--;
-        int awa = Random.Range(0, EstacionesDesbloqueadas - 1);
+        GameObject cclone =  Instantiate(costumer, EntradasDeComprador[b].position , new Quaternion(0,0,0,0));      
+        int awa = Random.Range(0, EstacionesDesbloqueadas);
         cclone.GetComponent<IACostumer>().Assing(DestinosDeComprador[awa], awa, SalidasDeComprador[Random.Range(0, SalidasDeComprador.Length)]);
 
         switch (awa) {
@@ -95,21 +109,26 @@ public class ManagerIA : MonoBehaviour
                 break;
             case 1:
                 Clientef2.Add(cclone);
+
                 break;  
             case 2:     
                 Clientef3.Add(cclone);
                 break;  
             case 3:     
                 Clientef4.Add(cclone);
+
                 break;  
             case 4:     
                 Clientef5.Add(cclone);
+
                 break;  
             case 5:     
                 Clientef6.Add(cclone);
+
                 break;  
             case 6:     
                 Clientef7.Add(cclone);
+
                 break;
             default:
                 print("Error");
@@ -122,74 +141,182 @@ public class ManagerIA : MonoBehaviour
     }
     //No spawnea Cliente
     public void NotSummonCost() {
-        Invoke("isnt", 1f);
+        Invoke("isnt", 2f);
     }
 
-    
+    public void SpawnVillagerBuyed(int Job) 
+    {
+        Estructuras[Job].SetActive(true);
 
-    
-    //Spawnea un Aldeano y Añade al trabajo
-    public void LevelUp(int Job) {
-
-        if (GameManager.instance.wallet[0].mon >= GameManager.instance.LevelStation[Job].cost) 
-        {
-            GameManager.instance.costStatio(GameManager.instance.LevelStation[Job].cost);
-
-            switch (Job) {
+        switch (Job) {
                 case 0:
                     if (Farm1 == null) {
                         GameObject clone = SummonV(Job);
                         Farm1 = clone;
+                        EstacionesDesbloqueadas = 1;
                     } 
-                    GameManager.instance.LevelStation[Job].LevelStation++;
-
-
                     break;
                 case 1:
                     if (Farm2 == null) {
                         GameObject clone = SummonV(Job);
                         Farm2 = clone;
-                    }
-                    GameManager.instance.LevelStation[Job].LevelStation++;
+                        EstacionesDesbloqueadas = 2;
 
+                    }
                     break;
                 case 2:
                     if (Farm3 == null) {
                         GameObject clone = SummonV(Job);
                         Farm3 = clone;
-                    }
-                    GameManager.instance.LevelStation[Job].LevelStation++;
+                        EstacionesDesbloqueadas = 3;
 
+                    }
                     break;
                 case 3:
-                    if (Panaderos == null) {
-                        GameObject clone = SummonV(Job);
-                        Panaderos = clone;
-                    }
-                    GameManager.instance.LevelStation[Job].LevelStation++;
-
-                    break;
-                case 4:
                     if (Costureros == null) {
                         GameObject clone = SummonV(Job);
                         Costureros = clone;
-                    }
-                    GameManager.instance.LevelStation[Job].LevelStation++;
+                        EstacionesDesbloqueadas = 4;
 
+                    }
+
+                    break;
+                case 4:
+                    if (Panaderos == null) {
+                        GameObject clone = SummonV(Job);
+                        Panaderos = clone;
+                        EstacionesDesbloqueadas = 5;
+
+                    }
                     break;
                 case 5:
                     if (Pescadores == null) {
                         GameObject clone = SummonV(Job);
                         Pescadores = clone;
+                        EstacionesDesbloqueadas = 6;
                     }
-                    GameManager.instance.LevelStation[Job].LevelStation++;
-
                     break;
                 case 6:
                     if (Molineros == null) {
                         GameObject clone = SummonV(Job);
                         Molineros = clone;
+                        EstacionesDesbloqueadas = 7;
+
                     }
+                    break;
+                default:
+                    Debug.Log("Error summon");
+                    break;
+            }
+
+        
+
+    }
+
+
+
+    //Spawnea un Aldeano y Añade al trabajo
+    public void LevelUp(int Job)
+    {
+        leveltotal = 0;
+
+        EstacionesDesbloqueadas = 0;
+
+        for (int i = 0; i < GameManager.instance.LevelStation.Length; i++)
+        {
+            if (GameManager.instance.LevelStation[i].Unlock)
+            {
+                EstacionesDesbloqueadas += 1;
+
+            }
+        }
+
+        if (GameManager.instance.wallet[0].mon > GameManager.instance.calccost(GameManager.instance.LevelStation[Job].cost, Job))
+        {
+            Debug.Log(GameManager.instance.wallet[0].mon);
+            GameManager.instance.costStatio(GameManager.instance.LevelStation[Job].cost, Job);
+            Debug.Log(GameManager.instance.wallet[0].mon);
+
+            switch (Job)
+            {
+                case 0:
+                    if (Farm1 == null)
+                    {
+                        GameObject clone = SummonV(Job);
+                        Farm1 = clone;
+                        Estructuras[0].SetActive(true);
+                    }
+
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
+
+                    break;
+                case 1:
+                    if (Farm2 == null)
+                    {
+                        GameObject clone = SummonV(Job);
+                        Farm2 = clone;
+                        Estructuras[1].SetActive(true);
+                    }
+
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
+                    break;
+                case 2:
+                    if (Farm3 == null)
+                    {
+                        GameObject clone = SummonV(Job);
+                        Farm3 = clone;
+                        Estructuras[2].SetActive(true);
+
+                    }
+
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
+                    break;
+                case 3:
+                    if (Costureros == null)
+                    {
+                        GameObject clone = SummonV(Job);
+                        Costureros = clone;
+                        Estructuras[3].SetActive(true);
+
+                    }
+
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
+                    break;
+                case 4:
+                    if (Panaderos == null)
+                    {
+                        GameObject clone = SummonV(Job);
+                        Panaderos = clone;
+                        Estructuras[4].SetActive(true);
+
+                    }
+
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
+                    break;
+                case 5:
+                    if (Pescadores == null)
+                    {
+                        GameObject clone = SummonV(Job);
+                        Pescadores = clone;
+                        Estructuras[5].SetActive(true);
+                    }
+
+                    GameManager.instance.LevelStation[Job].LevelStation++;
+
+                    break;
+                case 6:
+                    if (Molineros == null)
+                    {
+                        GameObject clone = SummonV(Job);
+                        Molineros = clone;
+                        Estructuras[6].SetActive(true);
+                    }
+
                     GameManager.instance.LevelStation[Job].LevelStation++;
 
                     break;
@@ -198,8 +325,228 @@ public class ManagerIA : MonoBehaviour
                     break;
             }
 
+            GameManager.instance.LevelStation[Job].Unlock = true;
+
         }
 
+        LevelTotall();
+
+
+    }
+    bool etapa2 = false;
+        int c;
+    void LevelTotall()
+    {
+        c = 0;
+        for (int i = 0; i < GameManager.instance.LevelStation.Length; i++)
+        {
+            leveltotal += GameManager.instance.LevelStation[i].LevelStation;
+        }
+        for (int i = 0; i < Clientef1.Count; i++)
+        {
+            c+=1;
+        }
+
+        if (leveltotal <5)
+        {
+            MaxCostumersAvailables = 5;
+        }else if (leveltotal >= 5 && !GameManager.instance.tutorials[0].T3 && !etapa2)
+        {
+            Debug.Log("awa");
+            DialogueManager.instance.TpD3();
+            if (c <= 12)
+            {
+
+                MaxCostumersAvailables = 12-c;
+            }
+            else
+            {
+                MaxCostumersAvailables = 0;
+            }
+            etapa2 = true;
+        }
+
+    }
+    public void AvazarFila(int fila, IACostumer costumer)
+    {
+        switch (fila)
+        {
+            case 0:
+                Clientef1.Remove(costumer.gameObject);
+                if (Clientef1.Count > 0)
+                {
+                    for (int i = 0; i < Clientef1.Count; i++)
+                    {
+
+                        Clientef1[i].GetComponent<IACostumer>().CheckState(true, i);
+                    }
+                }
+
+                break;
+            case 1:
+                Clientef2.Remove(costumer.gameObject);
+                if (Clientef2.Count > 0)
+                {
+                    for (int i = 0; i < Clientef2.Count; i++)
+                    {
+                        Clientef2[i].GetComponent<IACostumer>().CheckState(true, i);
+
+                    }
+                }
+                break;
+            case 2:
+                Clientef3.Remove(costumer.gameObject);
+                if (Clientef3.Count > 0)
+                {
+                    for (int i = 0; i < Clientef3.Count; i++)
+                    {
+                        Clientef3[i].GetComponent<IACostumer>().CheckState(true, i);
+
+                    }
+                }
+                break;
+            case 3:
+                Clientef4.Remove(costumer.gameObject);
+                if (Clientef4.Count > 0)
+                {
+                    for (int i = 0; i < Clientef4.Count; i++)
+                    {
+                        Clientef4[i].GetComponent<IACostumer>().CheckState(true, i);
+
+                    }
+                }
+                break;
+            case 4:
+                Clientef5.Remove(costumer.gameObject);
+                if (Clientef5.Count > 0)
+                {
+                    for (int i = 0; i < Clientef5.Count; i++)
+                    {
+
+                        Clientef5[i].GetComponent<IACostumer>().CheckState(true, i);
+
+                    }
+                }
+                break;
+            case 5:
+                Clientef6.Remove(costumer.gameObject);
+                if (Clientef6.Count > 0)
+                {
+                    for (int i = 0; i < Clientef6.Count; i++)
+                    {
+                        Clientef6[i].GetComponent<IACostumer>().CheckState(true, i);
+
+                    }
+                }
+                break;
+            case 6:
+                Clientef7.Remove(costumer.gameObject);
+                if (Clientef7.Count > 0)
+                {
+                    for (int i = 0; i < Clientef7.Count; i++)
+                    {
+                        Clientef7[i].GetComponent<IACostumer>().CheckState(true, i);
+
+                    }
+                }
+                break;
+            default:
+                    Clientef1[0].GetComponent<IACostumer>().CheckState(true, 0);
+
+                break;
+        }
+
+    }
+    public void LlegoCliente(int fila, IACostumer costumer)
+    {
+        switch (fila)
+        {
+            case 0:
+                if (Farm1 != null)
+                {
+                    Farm1.GetComponent<IAVillager>().chambear();
+                    Farm1.GetComponent<IAVillager>().costumer = costumer;
+                }
+                else
+                {
+                    Debug.Log("No hay Trabajador");
+                }
+                break;
+            case 1:
+                if (Farm2 != null)
+                {
+                    Farm2.GetComponent<IAVillager>().chambear();
+                    Farm2.GetComponent<IAVillager>().costumer = costumer;
+
+                }
+                else
+                {
+                    Debug.Log("No hay Trabajador");
+                }
+                break;
+            case 2:
+                if (Farm3 != null)
+                {
+                    Farm3.GetComponent<IAVillager>().chambear();
+                    Farm3.GetComponent<IAVillager>().costumer = costumer;
+
+                }
+                else
+                {
+                    Debug.Log("No hay Trabajador");
+                }
+                break;
+            case 3:
+                if (Costureros != null)
+                {
+                    Costureros.GetComponent<IAVillager>().chambear();
+                    Costureros.GetComponent<IAVillager>().costumer = costumer;
+
+                }
+                else
+                {
+                    Debug.Log("No hay Trabajador");
+                }
+                break;
+            case 4:
+                if (Panaderos != null)
+                {
+                    Panaderos.GetComponent<IAVillager>().chambear();
+                    Panaderos.GetComponent<IAVillager>().costumer = costumer;
+
+                }
+                else
+                {
+                    Debug.Log("No hay Trabajador");
+                }
+                break;
+            case 5:
+                if (Pescadores != null)
+                {
+                    Pescadores.GetComponent<IAVillager>().chambear();
+                    Pescadores.GetComponent<IAVillager>().costumer = costumer;
+
+                }
+                else
+                {
+                    Debug.Log("No hay Trabajador");
+                }
+                break;
+            case 6:
+                if (Molineros != null)
+                {
+                    Molineros.GetComponent<IAVillager>().chambear();
+                    Molineros.GetComponent<IAVillager>().costumer = costumer;
+
+                }
+                else
+                {
+                    Debug.Log("No hay Trabajador");
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     private GameObject SummonV(int Job) {

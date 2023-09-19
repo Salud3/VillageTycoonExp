@@ -14,29 +14,109 @@ public class IAVillager : MonoBehaviour {
     public ManagerIA.TipoAldeano tipoAldeano;
     public Transform lugarDeTrabajo;
     public Transform lugarReposo;
-    public Transform Puesto;
+    public Transform lugarEntrega;
     public Transform Destino;
 
     [Header("Chambeando")]
     public bool chambeando = false;
     //Detectar la peticion
-    public int VelWalk;
-    public int VelWork;
-    public int VelSell;
+
+    [Header("Stats")]
+    public int nivel;
+    public float VelWalk;
+    public float VelWork;
+    public float VelSell;
 
     [Header("NavMesh y cliente a que atender")]
     public NavMeshAgent agent;
     public IACostumer costumer;
 
 
-    public void Start() {
-
-        Invoke("inicio", 01f);
-    }
-
-    private void incio() {
+    public void incio() {
+        Debug.Log(GameManager.instance.LevelStation[(int)tipoAldeano].LevelStation +  tipoAldeano.ToString());
+        nivel = GameManager.instance.LevelStation[(int)tipoAldeano].LevelStation;
+        AssingLevelStats(nivel);
         ChangeDestination(lugarReposo);
 
+    }
+    
+    public void AssingLevelStats(int level)
+    {
+        switch (level)
+        {
+            case 0:
+                VelWalk= 3.8f;
+                agent.speed = VelWalk;
+                VelWork = 5f;
+                VelSell = 7f;
+                break;
+            case 1:
+                VelWalk = 3.9f;
+                agent.speed = VelWalk;
+                VelWork = 4.85f;
+                VelSell = 6.8f;
+                break;
+            case 2:
+                VelWalk = 4f;
+                agent.speed = VelWalk;
+                VelWork = 4.75f;
+                VelSell = 6.5f;
+                break;
+            case 3:
+                VelWalk = 4.2f;
+                agent.speed = VelWalk;
+                VelWork = 4.60f;
+                VelSell = 6.3f;
+                break;
+            case 4:
+                VelWalk = 4.4f;
+                agent.speed = VelWalk;
+                VelWork = 4.0f;
+                VelSell = 5.9f;
+                break;
+            case 5:
+                VelWalk = 4.6f;
+                agent.speed = VelWalk;
+                VelWork = 3.8f;
+                VelSell = 5.5f;
+                break;
+            case 6:
+                VelWalk = 4.8f;
+                agent.speed = VelWalk;
+                VelWork = 3.5f;
+                VelSell = 4.0f;
+                break;
+            case 7:
+                VelWalk = 4.8f;
+                agent.speed = VelWalk;
+                VelWork = 3.2f;
+                VelSell = 4.8f;
+                break;
+            case 8:
+                VelWalk = 4.8f;
+                agent.speed = VelWalk;
+                VelWork = 2.5f;
+                VelSell = 4.2f;
+                break;
+            case 9:
+                VelWalk = 4.8f;
+                agent.speed = VelWalk;
+                VelWork = 2f;
+                VelSell = 3f;
+                break;
+            case >=10:
+                VelWalk = 5.2f;
+                agent.speed = VelWalk;
+                VelWork = 1f;
+                VelSell = 1f;
+                break;
+            default:
+                VelWalk = 3.8f;
+                agent.speed = VelWalk;
+                VelWork = 5f;
+                VelSell = 7f;
+                break;
+        }
     }
 
     public void BuscarChamba() {
@@ -45,7 +125,10 @@ public class IAVillager : MonoBehaviour {
     }
 
     public void AssingJob(int job) {
-
+        print("Job" + job);
+        lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[job];
+        lugarReposo = ManagerIA.instance.VillagerReposo[job];
+        lugarEntrega = ManagerIA.instance.LugarEntregas[job];
 
         switch (job) {
             case 0:
@@ -58,24 +141,27 @@ public class IAVillager : MonoBehaviour {
                 tipoAldeano = ManagerIA.TipoAldeano.Farm3;
                 break;
             case 3:
-                tipoAldeano = ManagerIA.TipoAldeano.Pescador;
-                break;
-            case 4:
-                tipoAldeano = ManagerIA.TipoAldeano.Molinero;
-                break;
-            case 5:
                 tipoAldeano = ManagerIA.TipoAldeano.Costurero;
                 break;
-            case 6:
+            case 4:
                 tipoAldeano = ManagerIA.TipoAldeano.Panadero;
+                break;
+            case 5:
+                tipoAldeano = ManagerIA.TipoAldeano.Pescador;
+                break;
+            case 6:
+                tipoAldeano = ManagerIA.TipoAldeano.Molinero;
                 break;
             default:
                 break;
         }
+        incio();
+
 
     }
 
     
+
     //Asigna al estado actual una accion
     public void CheckState() {
         switch (currentState) {
@@ -101,24 +187,23 @@ public class IAVillager : MonoBehaviour {
 
         oldState = currentState;
         currentState = newstate;
-        Debug.Log("Cambio de estado Cliente a " + newstate);
+        //Debug.Log("Cambio de estado Cliente a " + newstate);
         CheckState();
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "LugarEntrega" && currentState != IAStatesV.Carry) {
+        /*if (other.tag == "LugarEntrega" && currentState != IAStatesV.Carry) {
 
-            ChangeDestination(lugarDeTrabajo);
 
-        }else if (other.tag == "LugarEntrega" && currentState == IAStatesV.Carry) {
+        }else*/ if (other.tag == "LugarEntrega" && currentState == IAStatesV.Carry) {
 
             ChangeState(IAStatesV.Selling);
             StartCoroutine("Vendiendo");
         }
 
-        if (other.tag == "Chamba") {
+        if (other.tag == "Chamba" && other.transform == lugarDeTrabajo) {
             
             ChangeState(IAStatesV.Working);
             StartCoroutine("Trabajo");
@@ -132,23 +217,29 @@ public class IAVillager : MonoBehaviour {
         //Debug.Log("Trabajando");
 
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(VelWork);
 
         //Debug.Log("Trabajo hecho");
-        ChangeDestination(Puesto);
+        ChangeDestination(lugarEntrega);
         CheckState();
 
     }
     public IEnumerator Vendiendo() {
 
-        Debug.Log("Vendiendo");
+        //Debug.Log("Vendiendo");
+        yield return new WaitForSeconds(VelSell);
         Debug.Log("Venta de " + (int)tipoAldeano + " " + tipoAldeano);
-        yield return new WaitForSeconds(5);
         GameManager.instance.Venta((int)tipoAldeano);
         costumer.CompraLista();
         costumer = null;
         chambeando = false;
         ChangeState(IAStatesV.None);
+
+    }
+
+    public void chambear()
+    {
+        ChangeDestination(lugarDeTrabajo);
 
     }
 

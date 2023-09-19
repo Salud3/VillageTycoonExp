@@ -12,6 +12,7 @@ public class SaveSystem : MonoBehaviour
     [Header("Info Player")]
     public VillagerClass[] LevelStation;
     public WalletClass[] wallet;
+    public TutorialClass[] Tutorial;
     public string namepl;
     public float moneyD;
 
@@ -34,7 +35,11 @@ public class SaveSystem : MonoBehaviour
 
         wallet = JsonHelper.FromJson<WalletClass>(jsonn);
 
-        
+        string uurl = Application.streamingAssetsPath + "/tutorial.json";
+        string jjson = File.ReadAllText(uurl);
+
+        Tutorial = JsonHelper.FromJson<TutorialClass>(jjson);
+
     }
     public void Saveall()
     {
@@ -45,21 +50,28 @@ public class SaveSystem : MonoBehaviour
     {
         for (int i = 0; i < LevelStation.Length; i++) 
         {
+            LevelStation[i].Unlock = GameManager.instance.LevelStation[i].Unlock;
             LevelStation[i].LevelStation = GameManager.instance.LevelStation[i].LevelStation;
         }
 
-        string jjson = JsonHelper.ToJson(LevelStation, true);
-        string uurl = Application.streamingAssetsPath + "/villagerInfo.json";
-        File.WriteAllText(uurl, jjson);
-        print("Save level stations" + jjson);
+        string json = JsonHelper.ToJson(LevelStation, true);
+        string url = Application.streamingAssetsPath + "/villagerInfo.json";
+        File.WriteAllText(url, json);
+        print("Save level stations" + json);
 
-        wallet[0] = new WalletClass(namepl, moneyD);
+        wallet[0] = GameManager.instance.wallet[0];
 
         string jsonn = JsonHelper.ToJson(wallet, true);
         string urll = Application.streamingAssetsPath + "/playerInfo.json";
         File.WriteAllText(urll, jsonn);
 
-        Debug.Log("Salvado");
+        Debug.Log("Salvado" + jsonn);
+
+        Tutorial[0] = GameManager.instance.tutorials[0];
+
+        string jjson = JsonHelper.ToJson(Tutorial, true);
+        string uurl = Application.streamingAssetsPath + "/tutorial.json";
+        File.WriteAllText(uurl, jjson);
 
 
     }
@@ -68,10 +80,10 @@ public class SaveSystem : MonoBehaviour
     {
         //regen infoPlayers
         LevelStation = new VillagerClass[8];
-        LevelStation[0] = new VillagerClass(0, 10, 15, false);
-        LevelStation[1] = new VillagerClass(0, 75, 25, false);
-        LevelStation[2] = new VillagerClass(0, 105, 35, false);
-        LevelStation[3] = new VillagerClass(0, 165, 55, false);
+        LevelStation[0] = new VillagerClass(0, 10, 15.5f, false);
+        LevelStation[1] = new VillagerClass(0, 55, 25, false);
+        LevelStation[2] = new VillagerClass(0, 75, 35, false);
+        LevelStation[3] = new VillagerClass(0, 105, 55, false);
         LevelStation[4] = new VillagerClass(0, 255, 85, false);
         LevelStation[5] = new VillagerClass(0, 285, 95, false);
         LevelStation[6] = new VillagerClass(0, 315, 105, false);
@@ -82,11 +94,19 @@ public class SaveSystem : MonoBehaviour
         File.WriteAllText(url, json);
         
         wallet = new WalletClass[1];
-        wallet[0] = new WalletClass("Wally",0);
+        wallet[0] = new WalletClass("Wally",15,false,0);
 
         string jsonn = JsonHelper.ToJson(wallet, true);
         string urll = Application.streamingAssetsPath + "/playerInfo.json";
         File.WriteAllText(urll, jsonn);
+
+        Tutorial = new TutorialClass[1];
+        Tutorial[0] = new TutorialClass(false, false, false, false);
+
+        string jjson = JsonHelper.ToJson(Tutorial, true);
+        string uurl = Application.streamingAssetsPath + "/tutorial.json";
+        File.WriteAllText(uurl, jjson);
+
 
     }
 

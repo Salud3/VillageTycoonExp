@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8684198044749749847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8684198044749749846}
+  - component: {fileID: 8684198044749749841}
+  - component: {fileID: 354450718417659578}
+  m_Layer: 0
+  m_Name: Tutorial1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8684198044749749846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8684198044749749847}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -24.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8684198044749749841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8684198044749749847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30cbd4d9043a79e4c9b696d98517d57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ActionMark: {fileID: 0}
+  dialoguePanel: {fileID: 0}
+  dialogueText: {fileID: 0}
+  TypingTime: 0.05
+  didDialogueStart: 0
+  dialoguelines:
+  - Bienvenido a Villager Tia-Kun!!
+  - 'Tu: por fin he llegado, veamos bah solo un sucio puesto y un huerto'
+  - 'Tu: uy una nota...'
+  - 'Nota: ola hijo,te dege la granja para ti i todo el terremo, io me boy d vacaciones
+    idenfinidas...'
+  - 'Posdada: has cn el terreno lo que guztez, te lo encargo'
+  - 'Tu: Que horrible letra :/'
+  - 'Tu: ni modo, este terreno es todo mio, hora de iniciar con el capitalismo. jejeje'
+  - "Tu: iniciare por restaurar el huerto y comprar un tractor, luego vere que hacer
+    con el terreno tras la monta\xF1a"
+  - '*pista*: abre el carrito y compra el primer huerto, cuando termines, date la
+    vuelta con el boton de girar para ir al terreno trasero.'
+  isMision: 1
+  completeText: 0
+--- !u!65 &354450718417659578
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8684198044749749847}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
