@@ -1,9 +1,9 @@
 {
     "Items": [
         {
-            "mon": 5.0,
+            "mon": 15.0,
             "nae": "Wally",
-            "started": true,
+            "started": false,
             "levelV": 0
         }
     ]

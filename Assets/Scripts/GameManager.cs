@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI money;
     public GameObject[] canvasEstacionesDes;
     public TextMeshProUGUI[] Precios;
+    public TextMeshProUGUI[] Levels;
     public TextMeshProUGUI PrecioV;
 
     private void Awake()
@@ -41,6 +42,11 @@ public class GameManager : MonoBehaviour
 
         AutoSave();
     }
+    private int calcLevel(int level)
+    {
+        level += 1;
+        return level;
+    }
     private void Update() 
     {
         if (wallet[0].mon > 0)
@@ -57,6 +63,7 @@ public class GameManager : MonoBehaviour
             if (canvasEstacionesDes[i].activeSelf)
             {
                 Precios[i].text = calccost(LevelStation[i].cost,i).ToString("##.##");
+                Levels[i].text = "lvl: " + calcLevel(LevelStation[i].LevelStation).ToString();
             }                           //(cost * (1+(cost/10)) * (1+(LevelStation[tipoV].LevelStation / 2)) 
         }
 

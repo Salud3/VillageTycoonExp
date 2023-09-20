@@ -1,8 +1,8 @@
 {
     "Items": [
         {
-            "Unlock": true,
-            "LevelStation": 1,
+            "Unlock": false,
+            "LevelStation": 0,
             "earning": 15.5,
             "cost": 10.0
         },
