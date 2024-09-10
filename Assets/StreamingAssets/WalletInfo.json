@@ -1,7 +1,7 @@
 {
     "Items": [
         {
-            "mon": 15.0,
+            "mon": 5.0,
             "nae": "Wally",
             "started": false,
             "levelV": 0

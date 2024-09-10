@@ -126,9 +126,9 @@ public class IAVillager : MonoBehaviour {
 
     public void AssingJob(int job) {
         print("Job" + job);
-        lugarDeTrabajo = ManagerIA.instance.VillagerTrabajos[job];
-        lugarReposo = ManagerIA.instance.VillagerReposo[job];
-        lugarEntrega = ManagerIA.instance.LugarEntregas[job];
+        lugarDeTrabajo = ManagerIA.Instance.VillagerTrabajos[job];
+        lugarReposo = ManagerIA.Instance.VillagerReposo[job];
+        lugarEntrega = ManagerIA.Instance.LugarEntregas[job];
 
         switch (job) {
             case 0:

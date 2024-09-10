@@ -30,7 +30,7 @@ public class SaveSystem : MonoBehaviour
     }
     private void ReadInfo()
     {
-        string url = Application.streamingAssetsPath + "/villagerInfo.json";
+        string url = Application.streamingAssetsPath + VillageFileName;
         
         if (System.IO.File.Exists(url))
         {
@@ -39,10 +39,11 @@ public class SaveSystem : MonoBehaviour
         }
         else
         {
+            
             ReGenInfoVillage();
         }
 
-        string urll = Application.streamingAssetsPath + "/playerInfo.json";
+        string urll = Application.streamingAssetsPath + WalletFileName;
 
         if (System.IO.File.Exists(urll))
         {
@@ -54,7 +55,7 @@ public class SaveSystem : MonoBehaviour
             RegenWallet();
         }
         
-        string uurl = Application.streamingAssetsPath + "/tutorial.json";
+        string uurl = Application.streamingAssetsPath + TutorialFileName;
 
         if (System.IO.File.Exists(uurl))
         {
@@ -110,6 +111,10 @@ public class SaveSystem : MonoBehaviour
 
     private void RegenTutorial()
     {
+#if UNITY_EDITOR
+        Debug.Log("RegenTutorial");
+        
+#endif
         tutorial = new TutorialClass[1];
         tutorial[0] = new TutorialClass(false, false, false, false);
 
@@ -120,6 +125,10 @@ public class SaveSystem : MonoBehaviour
 
     private void RegenWallet()
     {
+#if UNITY_EDITOR
+        Debug.Log("RegenWallet");
+        
+#endif
         wallet = new WalletClass[1];
         wallet[0] = new WalletClass("Wally",15,false,0);
 
@@ -130,6 +139,10 @@ public class SaveSystem : MonoBehaviour
 
     private void ReGenInfoVillage()
     {
+#if UNITY_EDITOR
+        Debug.Log("regenInfoVillage");
+        
+#endif
         //regen infoPlayers
         levelStation = new VillagerClass[8];
         levelStation[0] = new VillagerClass(0, 10, 15.5f, false);

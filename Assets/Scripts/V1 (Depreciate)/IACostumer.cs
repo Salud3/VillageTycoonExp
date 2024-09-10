@@ -40,14 +40,14 @@ public class IACostumer : MonoBehaviour
     {
         switch (numfila)
         {
-            case 0: return ManagerIA.instance.Clientef1.Count;
-            case 1: return ManagerIA.instance.Clientef2.Count;
-            case 2: return ManagerIA.instance.Clientef3.Count;
-            case 3: return ManagerIA.instance.Clientef4.Count;
-            case 4: return ManagerIA.instance.Clientef5.Count;
-            case 5: return ManagerIA.instance.Clientef6.Count;
-            case 6: return ManagerIA.instance.Clientef7.Count;
-            default: return ManagerIA.instance.Clientef1.Count;
+            case 0: return ManagerIA.Instance.Clientef1.Count;
+            case 1: return ManagerIA.Instance.Clientef2.Count;
+            case 2: return ManagerIA.Instance.Clientef3.Count;
+            case 3: return ManagerIA.Instance.Clientef4.Count;
+            case 4: return ManagerIA.Instance.Clientef5.Count;
+            case 5: return ManagerIA.Instance.Clientef6.Count;
+            case 6: return ManagerIA.Instance.Clientef7.Count;
+            default: return ManagerIA.Instance.Clientef1.Count;
         }
     }
     
@@ -68,7 +68,7 @@ public class IACostumer : MonoBehaviour
                     case 0:
                         if (!second)
                         {
-                            a += ManagerIA.instance.Clientef1.Count;
+                            a += ManagerIA.Instance.Clientef1.Count;
                         }
                         else
                         {
@@ -79,7 +79,7 @@ public class IACostumer : MonoBehaviour
                     case 1:
                         if (!second)
                         {
-                            a += ManagerIA.instance.Clientef2.Count;
+                            a += ManagerIA.Instance.Clientef2.Count;
                         }
                         else
                         {
@@ -89,7 +89,7 @@ public class IACostumer : MonoBehaviour
                     case 2:
                         if (!second)
                         {
-                            a += ManagerIA.instance.Clientef3.Count;
+                            a += ManagerIA.Instance.Clientef3.Count;
                         }
                         else
                         {
@@ -99,7 +99,7 @@ public class IACostumer : MonoBehaviour
                     case 3:
                         if (!second)
                         {
-                            a += ManagerIA.instance.Clientef4.Count;
+                            a += ManagerIA.Instance.Clientef4.Count;
                         }
                         else
                         {
@@ -110,7 +110,7 @@ public class IACostumer : MonoBehaviour
                     case 4:
                         if (!second)
                         {
-                            a += ManagerIA.instance.Clientef5.Count;
+                            a += ManagerIA.Instance.Clientef5.Count;
                         }
                         else
                         {
@@ -120,7 +120,7 @@ public class IACostumer : MonoBehaviour
                     case 5:
                         if (!second)
                         {
-                            a += ManagerIA.instance.Clientef6.Count;
+                            a += ManagerIA.Instance.Clientef6.Count;
                         }
                         else
                         {
@@ -130,7 +130,7 @@ public class IACostumer : MonoBehaviour
                     case 6:
                         if (!second)
                         {
-                            a += ManagerIA.instance.Clientef7.Count;
+                            a += ManagerIA.Instance.Clientef7.Count;
                         }
                         else
                         {
@@ -192,12 +192,12 @@ public class IACostumer : MonoBehaviour
 
             ChangeState(ManagerIA.IACostStates.Waiting);
 
-            ManagerIA.instance.LlegoCliente(numfila, this);
+            ManagerIA.Instance.LlegoCliente(numfila, this);
         }
 
         if(comprado && other.tag == "SalidaCliente")
         {
-            ManagerIA.instance.MaxCostumersAvailables++;
+            ManagerIA.Instance.MaxCostumersAvailables++;
             Destroy(this.gameObject,0.5f);
 
         } else if (!comprado && other.tag == "SalidaCliente")
@@ -211,7 +211,7 @@ public class IACostumer : MonoBehaviour
         if (other.tag == "LugarCompra") {
             this.gameObject.transform.parent.SetParent(null);
 
-            ManagerIA.instance.AvazarFila(numfila, this);
+            ManagerIA.Instance.AvazarFila(numfila, this);
             /*for (int i = 0; i < DestinoCompra.childCount; i++) {
 
                 DestinoCompra.transform.GetChild(i).GetComponent<IACostumer>().CheckState();

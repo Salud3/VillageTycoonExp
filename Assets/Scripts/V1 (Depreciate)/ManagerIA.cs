@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ManagerIA : MonoBehaviour
 {
@@ -9,10 +10,12 @@ public class ManagerIA : MonoBehaviour
     public enum TipoAldeano { Farm1, Farm2, Farm3, Costurero, Panadero, Pescador, Molinero }
     public enum IACostStates {None, Walk, Waiting, Buyed}
 
-    public static ManagerIA instance;
+    public static ManagerIA Instance;
+    
+    private ISpawnCostumer spawnCostumer;
 
     [Header("Niveles")]
-    public int EstacionesDesbloqueadas;
+    public int estacionesDesbloqueadas;
     int a = 0;
     public int leveltotal;
     [Header("Lugares Costumer y objeto instance")]
@@ -49,100 +52,33 @@ public class ManagerIA : MonoBehaviour
 
     public GameObject[] Estructuras = new GameObject[7];
 
+    public int A
+    {
+        set { a = value; }
+        get { return a; }
+    }
+
     void Start()
     {
-        instance = this;
-
+        Instance = this;
+        spawnCostumer = GetComponent<SpawnCostumer>();    
+        
         Invoke("Inic",0.1f);
     }
 
     public void Inic() {
         for (int i = 0; i < GameManager.instance.LevelStation.Length; i++) {
             if (GameManager.instance.LevelStation[i].Unlock) {
-                EstacionesDesbloqueadas++;
+                estacionesDesbloqueadas++;
                 SpawnVillagerBuyed(i);
 
             }
         }
         LevelTotall();
 
-        isnt();
+        spawnCostumer.Isnt();
     }
 
-    //Decide si spawnear o no un cliente
-    public void isnt() 
-    {
-        
-
-        switch (leveltotal)
-        {
-            case >= 25:
-                a = Random.Range(0, 3);
-                break;
-            case <= 25:
-                a = Random.Range(0, 8);
-                break;
-        }
-        print("tiempo de espera"+a);
-
-        if ( ((MaxCostumersAvailables > 0) && ((Clientef1.Count + Clientef2.Count + Clientef3.Count) <= 25)) && GameManager.instance.wallet[0].started)
-        {
-
-            Invoke("SummonCostumer", a);
-        
-        } else {
-    
-            Invoke("NotSummonCost", 0.1f);
-        
-        }
-    }
-    //Spawnea un Cliente
-    public void SummonCostumer() {
-        int b = Random.Range(0, EntradasDeComprador.Length);
-        GameObject cclone =  Instantiate(costumer, EntradasDeComprador[b].position , new Quaternion(0,0,0,0));      
-        int awa = Random.Range(0, EstacionesDesbloqueadas);
-        cclone.GetComponent<IACostumer>().Assing(DestinosDeComprador[awa], awa, SalidasDeComprador[Random.Range(0, SalidasDeComprador.Length)]);
-
-        switch (awa) {
-            case 0:
-                Clientef1.Add(cclone);
-                break;
-            case 1:
-                Clientef2.Add(cclone);
-
-                break;  
-            case 2:     
-                Clientef3.Add(cclone);
-                break;  
-            case 3:     
-                Clientef4.Add(cclone);
-
-                break;  
-            case 4:     
-                Clientef5.Add(cclone);
-
-                break;  
-            case 5:     
-                Clientef6.Add(cclone);
-
-                break;  
-            case 6:     
-                Clientef7.Add(cclone);
-
-                break;
-            default:
-                print("Error");
-                break;
-        }
-        MaxCostumersAvailables--;
-
-
-        Invoke("isnt", 1f);
-    }
-    //No spawnea Cliente
-    public void NotSummonCost() {
-        Invoke("isnt", 2f);
-    }
 
     public void SpawnVillagerBuyed(int Job) 
     {
@@ -153,14 +89,14 @@ public class ManagerIA : MonoBehaviour
                     if (Farm1 == null) {
                         GameObject clone = SummonV(Job);
                         Farm1 = clone;
-                        EstacionesDesbloqueadas = 1;
+                        estacionesDesbloqueadas = 1;
                     } 
                     break;
                 case 1:
                     if (Farm2 == null) {
                         GameObject clone = SummonV(Job);
                         Farm2 = clone;
-                        EstacionesDesbloqueadas = 2;
+                        estacionesDesbloqueadas = 2;
 
                     }
                     break;
@@ -168,7 +104,7 @@ public class ManagerIA : MonoBehaviour
                     if (Farm3 == null) {
                         GameObject clone = SummonV(Job);
                         Farm3 = clone;
-                        EstacionesDesbloqueadas = 3;
+                        estacionesDesbloqueadas = 3;
 
                     }
                     break;
@@ -176,7 +112,7 @@ public class ManagerIA : MonoBehaviour
                     if (Costureros == null) {
                         GameObject clone = SummonV(Job);
                         Costureros = clone;
-                        EstacionesDesbloqueadas = 4;
+                        estacionesDesbloqueadas = 4;
 
                     }
 
@@ -185,7 +121,7 @@ public class ManagerIA : MonoBehaviour
                     if (Panaderos == null) {
                         GameObject clone = SummonV(Job);
                         Panaderos = clone;
-                        EstacionesDesbloqueadas = 5;
+                        estacionesDesbloqueadas = 5;
 
                     }
                     break;
@@ -193,14 +129,14 @@ public class ManagerIA : MonoBehaviour
                     if (Pescadores == null) {
                         GameObject clone = SummonV(Job);
                         Pescadores = clone;
-                        EstacionesDesbloqueadas = 6;
+                        estacionesDesbloqueadas = 6;
                     }
                     break;
                 case 6:
                     if (Molineros == null) {
                         GameObject clone = SummonV(Job);
                         Molineros = clone;
-                        EstacionesDesbloqueadas = 7;
+                        estacionesDesbloqueadas = 7;
 
                     }
                     break;
@@ -220,13 +156,13 @@ public class ManagerIA : MonoBehaviour
     {
         leveltotal = 0;
 
-        EstacionesDesbloqueadas = 0;
+        estacionesDesbloqueadas = 0;
 
         for (int i = 0; i < GameManager.instance.LevelStation.Length; i++)
         {
             if (GameManager.instance.LevelStation[i].Unlock)
             {
-                EstacionesDesbloqueadas += 1;
+                estacionesDesbloqueadas += 1;
 
             }
         }
@@ -557,4 +493,4 @@ public class ManagerIA : MonoBehaviour
         clone.GetComponent<IAVillager>().AssingJob(Job);
         return clone;
     }
-}    
+}

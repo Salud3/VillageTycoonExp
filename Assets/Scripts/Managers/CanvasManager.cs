@@ -12,20 +12,20 @@ public class CanvasManager : MonoBehaviour
 
     public void showStations()
     {
-        if (ManagerIA.instance.leveltotal >= 5 && ManagerIA.instance.leveltotal <= 14)
+        if (ManagerIA.Instance.leveltotal >= 5 && ManagerIA.Instance.leveltotal <= 14)
         {
             for (int i = 0; i < 2; i++)
             {
                 canvasLockedStations[i].SetActive(true);
             }
-        }else if (ManagerIA.instance.leveltotal >= 15 && ManagerIA.instance.leveltotal <= 30)
+        }else if (ManagerIA.Instance.leveltotal >= 15 && ManagerIA.Instance.leveltotal <= 30)
         {
             for (int i = 0; i < 5; i++)
             {
                 canvasLockedStations[i].SetActive(true);
             }
         }
-        else if (ManagerIA.instance.leveltotal >30)
+        else if (ManagerIA.Instance.leveltotal >30)
         {
             for (int i = 0; i < canvasLockedStations.Length; i++)
             {
