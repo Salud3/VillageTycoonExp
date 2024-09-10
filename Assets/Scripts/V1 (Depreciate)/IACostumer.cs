@@ -12,6 +12,7 @@ public class IACostumer : MonoBehaviour
     [Header("NavMesh")]
     public NavMeshAgent agent;
     public Transform DestinoCompra; 
+    public int Entrada; 
     public Transform DestinoSalida;
 
     [Header("Variables")]
@@ -23,7 +24,7 @@ public class IACostumer : MonoBehaviour
     private void Awake() 
     {
 
-        //ChangeState(ManagerIA.IACostStates.None);
+        ChangeState(ManagerIA.IACostStates.None);
     
     }
 
@@ -35,22 +36,6 @@ public class IACostumer : MonoBehaviour
         ChangeState(ManagerIA.IACostStates.None);
     }
 
-    //Asigna al estado actual una accion
-    public int Walkdistance(int numfila)
-    {
-        switch (numfila)
-        {
-            case 0: return ManagerIA.Instance.Clientef1.Count;
-            case 1: return ManagerIA.Instance.Clientef2.Count;
-            case 2: return ManagerIA.Instance.Clientef3.Count;
-            case 3: return ManagerIA.Instance.Clientef4.Count;
-            case 4: return ManagerIA.Instance.Clientef5.Count;
-            case 5: return ManagerIA.Instance.Clientef6.Count;
-            case 6: return ManagerIA.Instance.Clientef7.Count;
-            default: return ManagerIA.Instance.Clientef1.Count;
-        }
-    }
-    
     public void CheckState(bool second, int dist)
     {
         int a = 2;
@@ -68,7 +53,7 @@ public class IACostumer : MonoBehaviour
                     case 0:
                         if (!second)
                         {
-                            a += ManagerIA.Instance.Clientef1.Count;
+                            a += ManagerIA.Instance.Costumersf1.Count;
                         }
                         else
                         {
@@ -79,7 +64,7 @@ public class IACostumer : MonoBehaviour
                     case 1:
                         if (!second)
                         {
-                            a += ManagerIA.Instance.Clientef2.Count;
+                            a += ManagerIA.Instance.Costumersf2.Count;
                         }
                         else
                         {
@@ -89,7 +74,7 @@ public class IACostumer : MonoBehaviour
                     case 2:
                         if (!second)
                         {
-                            a += ManagerIA.Instance.Clientef3.Count;
+                            a += ManagerIA.Instance.Costumersf3.Count;
                         }
                         else
                         {
@@ -99,7 +84,7 @@ public class IACostumer : MonoBehaviour
                     case 3:
                         if (!second)
                         {
-                            a += ManagerIA.Instance.Clientef4.Count;
+                            a += ManagerIA.Instance.Costumersf4.Count;
                         }
                         else
                         {
@@ -110,7 +95,7 @@ public class IACostumer : MonoBehaviour
                     case 4:
                         if (!second)
                         {
-                            a += ManagerIA.Instance.Clientef5.Count;
+                            a += ManagerIA.Instance.Costumersf5.Count;
                         }
                         else
                         {
@@ -120,7 +105,7 @@ public class IACostumer : MonoBehaviour
                     case 5:
                         if (!second)
                         {
-                            a += ManagerIA.Instance.Clientef6.Count;
+                            a += ManagerIA.Instance.Costumersf6.Count;
                         }
                         else
                         {
@@ -130,7 +115,7 @@ public class IACostumer : MonoBehaviour
                     case 6:
                         if (!second)
                         {
-                            a += ManagerIA.Instance.Clientef7.Count;
+                            a += ManagerIA.Instance.Costumersf7.Count;
                         }
                         else
                         {
@@ -197,8 +182,10 @@ public class IACostumer : MonoBehaviour
 
         if(comprado && other.tag == "SalidaCliente")
         {
-            ManagerIA.Instance.MaxCostumersAvailables++;
-            Destroy(this.gameObject,0.5f);
+            //Mandar a quitarme y desactivarme
+            this.transform.position = new Vector3(0, 00, 0);
+            ManagerIA.Instance.ReciveCostumer(this.gameObject,numfila);
+            //Destroy(this.gameObject,0.5f);
 
         } else if (!comprado && other.tag == "SalidaCliente")
         {

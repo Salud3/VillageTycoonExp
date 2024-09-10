@@ -1,6 +1,6 @@
 internal interface ISpawnCostumer
 {
-    void Isnt();
+    void MakeInvokeCustomer();
     void SummonCostumer();
     void NotSummonCost();
 }

@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     }
     private int calcLevel(int level)
     {
-        level += 1;
         return level;
     }
     private void Update() 

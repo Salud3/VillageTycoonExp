@@ -24,15 +24,18 @@ public class ManagerIA : MonoBehaviour
     public Transform[] SalidasDeComprador = new Transform[3];
     public Transform[] DestinosDeComprador = new Transform[3];
 
-    public List<GameObject> Clientef1;
-    public List<GameObject> Clientef2;
-    public List<GameObject> Clientef3;
-    public List<GameObject> Clientef4;
-    public List<GameObject> Clientef5;
-    public List<GameObject> Clientef6;
-    public List<GameObject> Clientef7;
-
-    public int MaxCostumersAvailables;
+    public List<GameObject> Costumersf1;
+    public List<GameObject> Costumersf2;
+    public List<GameObject> Costumersf3;
+    public List<GameObject> Costumersf4;
+    public List<GameObject> Costumersf5;
+    public List<GameObject> Costumersf6;
+    public List<GameObject> Costumersf7;
+    
+    public List<GameObject> costumerPool;
+    
+    //Maximo de clientes en las filas iniciales
+    public int _maxCostumersFI = 15;
 
     [Header("Lugares Costumer y objeto instance")]
     
@@ -76,9 +79,32 @@ public class ManagerIA : MonoBehaviour
         }
         LevelTotall();
 
-        spawnCostumer.Isnt();
+        spawnCostumer.MakeInvokeCustomer();
     }
 
+    public void ReciveCostumer(GameObject costumer, int numfila)
+    {
+        switch (numfila)
+        {
+            case 1:
+                Costumersf1.Remove(costumer);
+                costumerPool.Add(costumer);
+                costumer.SetActive(false);
+                break;
+            case 2:
+                break; 
+            case 3:
+                break;
+            case 4:
+                break; 
+            case 5:
+                break; 
+            case 6:
+                break; 
+            default: 
+                break;
+        }
+    }
 
     public void SpawnVillagerBuyed(int Job) 
     {
@@ -148,9 +174,6 @@ public class ManagerIA : MonoBehaviour
         
 
     }
-
-
-
     //Spawnea un Aldeano y Añade al trabajo
     public void LevelUp(int Job)
     {
@@ -269,8 +292,8 @@ public class ManagerIA : MonoBehaviour
 
 
     }
-    bool etapa2 = false;
-        int c;
+    bool etapa2 = false; 
+    int c;
     void LevelTotall()
     {
         c = 0;
@@ -278,116 +301,132 @@ public class ManagerIA : MonoBehaviour
         {
             leveltotal += GameManager.instance.LevelStation[i].LevelStation;
         }
-        for (int i = 0; i < Clientef1.Count; i++)
-        {
-            c+=1;
-        }
 
+        CalcPoolSize();
+
+    }
+
+    private int lowLevel = 5;
+    private int highLevel = 12;
+    
+    private void CalcPoolSize()
+    {
         if (leveltotal <5)
         {
-            MaxCostumersAvailables = 5;
+            for (int i = 0; i < lowLevel; i++)
+            {
+                spawnCostumer.SummonCostumer();
+            }
+            
         }else if (leveltotal >= 5 && !GameManager.instance.tutorials[0].T3 && !etapa2)
         {
-            Debug.Log("awa");
+            //Inicializa el Tutorial3
             DialogueManager.instance.TpD3();
+            
+           /*
+            //12 es la constante para el maximo de la fila 1 niveles menores a 5
             if (c <= 12)
             {
-
-                MaxCostumersAvailables = 12-c;
+                maxNumCostumer = 12-c;
             }
             else
             {
-                MaxCostumersAvailables = 0;
+                maxNumCostumer = 0;
             }
+            */
+           
+           
+           
             etapa2 = true;
+            
         }
-
     }
+
     public void AvazarFila(int fila, IACostumer costumer)
     {
         switch (fila)
         {
             case 0:
-                Clientef1.Remove(costumer.gameObject);
-                if (Clientef1.Count > 0)
+                Costumersf1.Remove(costumer.gameObject);
+                if (Costumersf1.Count > 0)
                 {
-                    for (int i = 0; i < Clientef1.Count; i++)
+                    for (int i = 0; i < Costumersf1.Count; i++)
                     {
 
-                        Clientef1[i].GetComponent<IACostumer>().CheckState(true, i);
+                        Costumersf1[i].GetComponent<IACostumer>().CheckState(true, i);
                     }
                 }
 
                 break;
             case 1:
-                Clientef2.Remove(costumer.gameObject);
-                if (Clientef2.Count > 0)
+                Costumersf2.Remove(costumer.gameObject);
+                if (Costumersf2.Count > 0)
                 {
-                    for (int i = 0; i < Clientef2.Count; i++)
+                    for (int i = 0; i < Costumersf2.Count; i++)
                     {
-                        Clientef2[i].GetComponent<IACostumer>().CheckState(true, i);
+                        Costumersf2[i].GetComponent<IACostumer>().CheckState(true, i);
 
                     }
                 }
                 break;
             case 2:
-                Clientef3.Remove(costumer.gameObject);
-                if (Clientef3.Count > 0)
+                Costumersf3.Remove(costumer.gameObject);
+                if (Costumersf3.Count > 0)
                 {
-                    for (int i = 0; i < Clientef3.Count; i++)
+                    for (int i = 0; i < Costumersf3.Count; i++)
                     {
-                        Clientef3[i].GetComponent<IACostumer>().CheckState(true, i);
+                        Costumersf3[i].GetComponent<IACostumer>().CheckState(true, i);
 
                     }
                 }
                 break;
             case 3:
-                Clientef4.Remove(costumer.gameObject);
-                if (Clientef4.Count > 0)
+                Costumersf4.Remove(costumer.gameObject);
+                if (Costumersf4.Count > 0)
                 {
-                    for (int i = 0; i < Clientef4.Count; i++)
+                    for (int i = 0; i < Costumersf4.Count; i++)
                     {
-                        Clientef4[i].GetComponent<IACostumer>().CheckState(true, i);
+                        Costumersf4[i].GetComponent<IACostumer>().CheckState(true, i);
 
                     }
                 }
                 break;
             case 4:
-                Clientef5.Remove(costumer.gameObject);
-                if (Clientef5.Count > 0)
+                Costumersf5.Remove(costumer.gameObject);
+                if (Costumersf5.Count > 0)
                 {
-                    for (int i = 0; i < Clientef5.Count; i++)
+                    for (int i = 0; i < Costumersf5.Count; i++)
                     {
 
-                        Clientef5[i].GetComponent<IACostumer>().CheckState(true, i);
+                        Costumersf5[i].GetComponent<IACostumer>().CheckState(true, i);
 
                     }
                 }
                 break;
             case 5:
-                Clientef6.Remove(costumer.gameObject);
-                if (Clientef6.Count > 0)
+                Costumersf6.Remove(costumer.gameObject);
+                if (Costumersf6.Count > 0)
                 {
-                    for (int i = 0; i < Clientef6.Count; i++)
+                    for (int i = 0; i < Costumersf6.Count; i++)
                     {
-                        Clientef6[i].GetComponent<IACostumer>().CheckState(true, i);
+                        Costumersf6[i].GetComponent<IACostumer>().CheckState(true, i);
 
                     }
                 }
                 break;
             case 6:
-                Clientef7.Remove(costumer.gameObject);
-                if (Clientef7.Count > 0)
+                Costumersf7.Remove(costumer.gameObject);
+                if (Costumersf7.Count > 0)
                 {
-                    for (int i = 0; i < Clientef7.Count; i++)
+                    for (int i = 0; i < Costumersf7.Count; i++)
                     {
-                        Clientef7[i].GetComponent<IACostumer>().CheckState(true, i);
+                        Costumersf7[i].GetComponent<IACostumer>().CheckState(true, i);
 
                     }
                 }
                 break;
             default:
-                    Clientef1[0].GetComponent<IACostumer>().CheckState(true, 0);
+                    Costumersf1[0].GetComponent<IACostumer>().CheckState(true, 0);
 
                 break;
         }

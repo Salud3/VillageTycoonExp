@@ -34,15 +34,6 @@ public class VillagerManager : MonoBehaviour
     {
         instance = this;
     }
-    private void Start()
-    {
-        Inicio();
-    }
-
-    private void Inicio()
-    {
-
-    }
 
     //Spawnea un Aldeano y Añade al trabajo
     public void SummonVillager(int index)

@@ -2,25 +2,25 @@
     "Items": [
         {
             "Unlock": true,
-            "LevelStation": 1,
+            "LevelStation": 11,
             "earning": 15.5,
             "cost": 10.0
         },
         {
-            "Unlock": false,
-            "LevelStation": 0,
+            "Unlock": true,
+            "LevelStation": 5,
             "earning": 25.0,
             "cost": 55.0
         },
         {
-            "Unlock": false,
-            "LevelStation": 0,
+            "Unlock": true,
+            "LevelStation": 6,
             "earning": 35.0,
             "cost": 75.0
         },
         {
-            "Unlock": false,
-            "LevelStation": 0,
+            "Unlock": true,
+            "LevelStation": 4,
             "earning": 55.0,
             "cost": 105.0
         },

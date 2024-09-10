@@ -3,7 +3,7 @@
         {
             "T1": true,
             "T2": false,
-            "T3": false,
+            "T3": true,
             "T4": false
         }
     ]
