@@ -34,8 +34,8 @@ public class GameManager : MonoBehaviour
     private void Start() {
 
         wallet = SaveSystem.Instance.wallet;
-        LevelStation = SaveSystem.Instance.LevelStation;
-        tutorials = SaveSystem.Instance.Tutorial;
+        LevelStation = SaveSystem.Instance.levelStation;
+        tutorials = SaveSystem.Instance.tutorial;
 
         MostrarVilla();
 
@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
     private void AutoSave()
     {
         Debug.Log("AUTO GUARDADO");
-        SaveSystem.Instance.Saveall();
+        SaveSystem.Instance.SaveAll();
         Invoke("AutoSave",250f);
     }
 
@@ -195,6 +195,6 @@ public class GameManager : MonoBehaviour
 
                 break;
         }
-        SaveSystem.Instance.Saveall();
+        SaveSystem.Instance.SaveAll();
     }
 }

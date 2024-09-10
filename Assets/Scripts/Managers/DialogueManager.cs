@@ -23,22 +23,22 @@ public class DialogueManager : MonoBehaviour
             GameManager.instance.wallet[0].started = true;
             GameManager.instance.tutorials[0].T1 = true;
             inic = false;
-            SaveSystem.Instance.Saveall();
+            SaveSystem.Instance.SaveAll();
         }
         if (D2.GetComponent<Dialogue>().completeText && !GameManager.instance.tutorials[0].T2)
         {
             GameManager.instance.tutorials[0].T2 = true;
-            SaveSystem.Instance.Saveall();
+            SaveSystem.Instance.SaveAll();
         }
         if (D3.GetComponent<Dialogue>().completeText && !GameManager.instance.tutorials[0].T3)
         {
             GameManager.instance.tutorials[0].T3 = true;
-            SaveSystem.Instance.Saveall();
+            SaveSystem.Instance.SaveAll();
         }
         if (D4.GetComponent<Dialogue>().completeText && !GameManager.instance.tutorials[0].T4)
         {
             GameManager.instance.tutorials[0].T4 = true;
-            SaveSystem.Instance.Saveall();
+            SaveSystem.Instance.SaveAll();
         }
 
 

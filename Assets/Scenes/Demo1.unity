@@ -2331,7 +2331,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 627409578}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: Saveall
+        m_MethodName: SaveAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5844,7 +5844,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 627409578}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: Saveall
+        m_MethodName: SaveAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9824,7 +9824,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 627409578}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: Saveall
+        m_MethodName: SaveAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -22015,7 +22015,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 627409578}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: Saveall
+        m_MethodName: SaveAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -22950,7 +22950,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 627409578}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: Saveall
+        m_MethodName: SaveAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -38449,7 +38449,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 627409578}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: Saveall
+        m_MethodName: SaveAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -40325,7 +40325,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 627409578}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: Saveall
+        m_MethodName: SaveAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -47782,7 +47782,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 627409578}
         m_TargetAssemblyTypeName: SaveSystem, Assembly-CSharp
-        m_MethodName: Saveall
+        m_MethodName: SaveAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
