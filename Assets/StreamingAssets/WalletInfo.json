@@ -3,7 +3,7 @@
         {
             "mon": 5.0,
             "nae": "Wally",
-            "started": false,
+            "started": true,
             "levelV": 0
         }
     ]

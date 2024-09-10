@@ -7802,7 +7802,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51
+  m_fontSize: 51.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15062,10 +15062,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29dffd87f49127e43af96147799e26c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LevelStation: []
+  levelStation: []
   wallet: []
-  Tutorial: []
-  namepl: 
+  tutorial: []
+  namePl: 
   moneyD: 0
 --- !u!4 &627409579
 Transform:
@@ -27461,6 +27461,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1250830845}
   - component: {fileID: 1250830844}
+  - component: {fileID: 1250830846}
   m_Layer: 0
   m_Name: IAManager
   m_TagString: Untagged
@@ -27480,7 +27481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e715abd38b37548b1fd587c0a72625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EstacionesDesbloqueadas: 0
+  estacionesDesbloqueadas: 0
   leveltotal: 0
   costumer: {fileID: 5852652954143978921, guid: e1db9a68c7b72034796091af269e1ab6, type: 3}
   EntradasDeComprador:
@@ -27566,6 +27567,18 @@ Transform:
   m_Father: {fileID: 1663920120}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1250830846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250830842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7039a4fc7c8040a796d18a2c3c89c76b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1254398101
 GameObject:
   m_ObjectHideFlags: 0

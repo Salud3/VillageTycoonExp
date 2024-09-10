@@ -49,6 +49,7 @@ public class DialogueManager : MonoBehaviour
         {
 
             D1.transform.position = this.transform.position;
+            Debug.Log("Dialogue1 a pos inicial");
 
         }
         else
@@ -56,7 +57,7 @@ public class DialogueManager : MonoBehaviour
             D1.GetComponent<Dialogue>().completeText = true;
             inic = false;
 
-            Debug.Log("aa");
+            Debug.Log("Iniciar Dialogue1");
         }
     }
 
