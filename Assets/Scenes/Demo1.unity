@@ -5749,14 +5749,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375840cb98e37ca45a821decbd64437f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasLockedStations:
+  money: {fileID: 1668358747}
+  precioV: {fileID: 1516596371}
+  Precios:
+  - {fileID: 605219370}
+  - {fileID: 1540944825}
+  - {fileID: 1858767588}
+  - {fileID: 2015281380}
+  - {fileID: 1762571639}
+  - {fileID: 1693380993}
+  - {fileID: 1533414159}
+  EstacionesUI:
+  - {fileID: 538388441}
   - {fileID: 952890317}
   - {fileID: 1644161264}
   - {fileID: 1625120715}
   - {fileID: 1680307214}
   - {fileID: 2054735436}
   - {fileID: 263957990}
-  station1: {fileID: 0}
+  Levels:
+  - {fileID: 1569199539}
+  - {fileID: 1241122065}
+  - {fileID: 838287821}
+  - {fileID: 77607984}
+  - {fileID: 2073948003}
+  - {fileID: 613130198}
+  - {fileID: 2111379297}
 --- !u!1 &260023256
 GameObject:
   m_ObjectHideFlags: 0
@@ -7802,7 +7820,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51.3
+  m_fontSize: 49.95
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -15067,6 +15085,8 @@ MonoBehaviour:
   tutorial: []
   namePl: 
   moneyD: 0
+  cost: 
+  earn: 
 --- !u!4 &627409579
 Transform:
   m_ObjectHideFlags: 0
@@ -27461,7 +27481,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1250830845}
   - component: {fileID: 1250830844}
+  - component: {fileID: 1250830849}
   - component: {fileID: 1250830846}
+  - component: {fileID: 1250830847}
+  - component: {fileID: 1250830848}
   m_Layer: 0
   m_Name: IAManager
   m_TagString: Untagged
@@ -27481,8 +27504,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e715abd38b37548b1fd587c0a72625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  villagerType:
+  - Farm1
+  - Farm2
+  - Farm3
+  - Costurero
+  - Panadero
+  - Pescador
+  - Molinero
+  _totalSpawned: 0
+  etapa2: 0
   estacionesDesbloqueadas: 0
   leveltotal: 0
+  _maxCostumersFI: 15
   costumer: {fileID: 5852652954143978921, guid: e1db9a68c7b72034796091af269e1ab6, type: 3}
   EntradasDeComprador:
   - {fileID: 298921169}
@@ -27500,15 +27534,22 @@ MonoBehaviour:
   - {fileID: 1803583056}
   - {fileID: 1651274312}
   - {fileID: 1338024245}
-  Clientef1: []
-  Clientef2: []
-  Clientef3: []
-  Clientef4: []
-  Clientef5: []
-  Clientef6: []
-  Clientef7: []
-  MaxCostumersAvailables: 10
-  Villager: {fileID: 5939605455813243168, guid: 6ce1cea8003cf224dbae25138d567836, type: 3}
+  Costumersf1: []
+  Costumersf2: []
+  Costumersf3: []
+  Costumersf4: []
+  Costumersf5: []
+  Costumersf6: []
+  Costumersf7: []
+  costumerPool: []
+  Villagers:
+  - {fileID: 5939605455813243168, guid: 6ce1cea8003cf224dbae25138d567836, type: 3}
+  - {fileID: 5939605455813243168, guid: 9237535a65569de41903fa0ea64767d0, type: 3}
+  - {fileID: 5939605455813243168, guid: ef4138cb2fe5abb49808f1ff7bb5c2eb, type: 3}
+  - {fileID: 5939605455813243168, guid: 1c516afcfab8d384b8822f245d9a0d3f, type: 3}
+  - {fileID: 5939605455813243168, guid: 2934ca107c9b63849844595c8eda063f, type: 3}
+  - {fileID: 5939605455813243168, guid: 9a76ce64a24b17d46b203d49a542186a, type: 3}
+  - {fileID: 5939605455813243168, guid: 98fd3bc24030f92439d51309e030209f, type: 3}
   VillagerSpawn:
   - {fileID: 1559480660}
   - {fileID: 880623098}
@@ -27577,6 +27618,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7039a4fc7c8040a796d18a2c3c89c76b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1250830847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250830842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8cb486d0ca04dac82e53fa93919ee41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1250830848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250830842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0184c301cfb140e7aad3a3436f209588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1250830849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250830842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c249ca44aef4bf89cb1a0276a15055e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1254398101
@@ -33607,7 +33684,7 @@ GameObject:
   - component: {fileID: 1516596372}
   - component: {fileID: 1516596371}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: CostVillage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42440,23 +42517,6 @@ MonoBehaviour:
   - {fileID: 1382143805}
   - {fileID: 1759792378}
   Casa: {fileID: 887143780}
-  money: {fileID: 1668358747}
-  canvasEstacionesDes:
-  - {fileID: 538388441}
-  - {fileID: 952890317}
-  - {fileID: 1644161264}
-  - {fileID: 1625120715}
-  - {fileID: 1680307214}
-  - {fileID: 2054735436}
-  - {fileID: 263957990}
-  Precios:
-  - {fileID: 605219370}
-  - {fileID: 1540944825}
-  - {fileID: 1858767588}
-  - {fileID: 2015281380}
-  - {fileID: 1762571639}
-  - {fileID: 1693380993}
-  - {fileID: 1533414159}
   Levels:
   - {fileID: 1569199539}
   - {fileID: 1241122065}
@@ -42465,7 +42525,6 @@ MonoBehaviour:
   - {fileID: 2073948003}
   - {fileID: 613130198}
   - {fileID: 2111379297}
-  PrecioV: {fileID: 1516596371}
 --- !u!1 &1903770473
 GameObject:
   m_ObjectHideFlags: 0

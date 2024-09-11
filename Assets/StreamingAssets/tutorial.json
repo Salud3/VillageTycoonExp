@@ -2,9 +2,9 @@
     "Items": [
         {
             "T1": true,
-            "T2": false,
+            "T2": true,
             "T3": true,
-            "T4": false
+            "T4": true
         }
     ]
 }

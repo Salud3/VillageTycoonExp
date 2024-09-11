@@ -35,8 +35,11 @@ public class VillagerManager : MonoBehaviour
         instance = this;
     }
 
-    //Spawnea un Aldeano y Añade al trabajo
-    public void SummonVillager(int index)
+    
+}
+/*
+    //Version Primitiva Spawnea un Aldeano y Añade al trabajo
+ public void SummonVillager(int index)
     {
         int b = Random.Range(0, 3);
 
@@ -77,4 +80,4 @@ public class VillagerManager : MonoBehaviour
 
 
     }
-}
+ */

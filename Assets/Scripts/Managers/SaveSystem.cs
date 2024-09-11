@@ -17,6 +17,11 @@ public class SaveSystem : MonoBehaviour
     public TutorialClass[] tutorial;
     public string namePl;
     public float moneyD;
+
+    [Header("ONLYDEV")] 
+    public int[] cost;
+    public int[] earn;
+    
     //Constant Files Name
     private const string VillageFileName = "/VillageInfo.json";
     private const string WalletFileName = "/WalletInfo.json";
@@ -146,8 +151,8 @@ public class SaveSystem : MonoBehaviour
         //regen infoPlayers
         levelStation = new VillagerClass[8];
         levelStation[0] = new VillagerClass(0, 10, 15.5f, false);
-        levelStation[1] = new VillagerClass(0, 55, 25, false);
-        levelStation[2] = new VillagerClass(0, 75, 35, false);
+        levelStation[1] = new VillagerClass(0, 55, 25,  false);
+        levelStation[2] = new VillagerClass(0, 75, 35,  false);
         levelStation[3] = new VillagerClass(0, 105, 55, false);
         levelStation[4] = new VillagerClass(0, 255, 85, false);
         levelStation[5] = new VillagerClass(0, 285, 95, false);

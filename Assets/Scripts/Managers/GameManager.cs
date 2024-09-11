@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, INotifications
 {
     public static GameManager instance;
 
@@ -21,11 +21,8 @@ public class GameManager : MonoBehaviour
     public GameObject Casa;
 
     [Header("Textos")]
-    public TextMeshProUGUI money;
-    public GameObject[] canvasEstacionesDes;
-    public TextMeshProUGUI[] Precios;
+    //public TextMeshProUGUI money;
     public TextMeshProUGUI[] Levels;
-    public TextMeshProUGUI PrecioV;
 
     private void Awake()
     {
@@ -42,70 +39,25 @@ public class GameManager : MonoBehaviour
 
         AutoSave();
     }
-    private int calcLevel(int level)
+    public int calcLevel(int level)
     {
         return level;
     }
-    private void Update() 
-    {
-        if (wallet[0].mon > 0)
-        {
-            money.text = wallet[0].mon.ToString("#.##");
-        }
-        else
-        {
-            money.text = "0.0";
-        }
-
-        for (int i = 0; i < Precios.Length; i++)
-        {
-            if (canvasEstacionesDes[i].activeSelf)
-            {
-                Precios[i].text = calccost(LevelStation[i].cost,i).ToString("##.##");
-                Levels[i].text = "lvl: " + calcLevel(LevelStation[i].LevelStation).ToString();
-            }                           //(cost * (1+(cost/10)) * (1+(LevelStation[tipoV].LevelStation / 2)) 
-        }
-
-        if (PrecioV.gameObject.activeSelf)
-        {
-            switch (wallet[0].levelV)
-            {
-                case 0:
-                    PrecioV.text = Cost1.ToString("#.##");
-                    break;
-                case 1:
-                    PrecioV.text = Cost2.ToString("#.##");
-                    break;
-                case 2:
-                    PrecioV.text = Cost3.ToString("#.##");
-                    break;
-                case 3:
-                    PrecioV.text = "Maximo Nivel!!";
-                    break;
-                default:
-                    PrecioV.text = Cost1.ToString("#.##");
-                    break;
-            }
-        }
-
-    }
-    
-
-    
     private void AutoSave()
     {
         Debug.Log("AUTO GUARDADO");
         SaveSystem.Instance.SaveAll();
+        Notify();
         Invoke("AutoSave",250f);
     }
 
-    public float calccost(float cost, int tipoV)
+    public float CalcCost(float cost, int tipoV)
     {
         float costt = cost + (((cost* 0.5f) * LevelStation[tipoV].LevelStation) / 2);
         return costt;
     }
 
-    public void costStatio(float cost, int tipoV) {
+    public void CostStatio(float cost, int tipoV) {
 
         wallet[0].mon -= cost + (((cost *0.5f) * LevelStation[tipoV].LevelStation) / 2);
 
@@ -121,6 +73,7 @@ public class GameManager : MonoBehaviour
         {
             wallet[0].mon += LevelStation[tipoV].earning * ((LevelStation[tipoV].LevelStation / 10) * 2 + 1);
         }
+        Notify();
 
     }
 
@@ -190,10 +143,30 @@ public class GameManager : MonoBehaviour
                 break;
             default:
 
-                print("Error Compra Villa");
+                Debug.LogError("Error Mejora Villa");
 
                 break;
         }
+        Notify();
         SaveSystem.Instance.SaveAll();
+    }
+
+    private readonly List<IObserver> _observers = new List<IObserver>();
+    public void SuscribeNotification(IObserver observer)
+    {
+        _observers.Add(observer);
+    }
+
+    public void UnSuscribeNotification(IObserver observer)
+    {
+        _observers.Remove(observer);
+    }
+
+    public void Notify()
+    {
+        foreach (var observer in _observers)
+        {
+            observer.Updated(this);
+        }
     }
 }

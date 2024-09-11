@@ -12,7 +12,7 @@ public class IACostumer : MonoBehaviour
     [Header("NavMesh")]
     public NavMeshAgent agent;
     public Transform DestinoCompra; 
-    public int Entrada; 
+    public Transform EntradaCompra; 
     public Transform DestinoSalida;
 
     [Header("Variables")]
@@ -21,26 +21,20 @@ public class IACostumer : MonoBehaviour
     public int numfila;
     public int[] peticion;
 
-    private void Awake() 
-    {
-
-        ChangeState(ManagerIA.IACostStates.None);
-    
-    }
-
-    public void Assing(Transform lugarcompra, int numfila, Transform salida)
+    public void Assing(Transform lugarcompra, int numfila, Transform salida, Transform entrada)
     {
         DestinoCompra = lugarcompra;
         this.numfila = numfila;
         DestinoSalida = salida;
+        EntradaCompra = entrada;
         ChangeState(ManagerIA.IACostStates.None);
     }
 
     public void CheckState(bool second, int dist)
     {
         int a = 2;
-        print(a);
-        print("check");
+        //print(a);
+        //print("check");
         switch (CurrentState)
         {
             case ManagerIA.IACostStates.None:
@@ -173,19 +167,18 @@ public class IACostumer : MonoBehaviour
     {
         if(other.tag == "LugarCompra")
         {
-            this.gameObject.transform.SetParent(other.gameObject.transform);
+            //this.gameObject.transform.SetParent(other.gameObject.transform);
 
             ChangeState(ManagerIA.IACostStates.Waiting);
 
-            ManagerIA.Instance.LlegoCliente(numfila, this);
+            ManagerIA.Instance.CheckoutC(numfila, this);
         }
 
         if(comprado && other.tag == "SalidaCliente")
         {
             //Mandar a quitarme y desactivarme
-            this.transform.position = new Vector3(0, 00, 0);
-            ManagerIA.Instance.ReciveCostumer(this.gameObject,numfila);
-            //Destroy(this.gameObject,0.5f);
+            this.transform.position = EntradaCompra.position;
+            ManagerIA.Instance.ExitC(this.gameObject);
 
         } else if (!comprado && other.tag == "SalidaCliente")
         {
@@ -196,14 +189,10 @@ public class IACostumer : MonoBehaviour
     private void OnTriggerExit(Collider other) {
 
         if (other.tag == "LugarCompra") {
-            this.gameObject.transform.parent.SetParent(null);
+            //this.gameObject.transform.parent.SetParent(null);
 
-            ManagerIA.Instance.AvazarFila(numfila, this);
-            /*for (int i = 0; i < DestinoCompra.childCount; i++) {
+            ManagerIA.Instance.LineUpdate(numfila, this.gameObject);
 
-                DestinoCompra.transform.GetChild(i).GetComponent<IACostumer>().CheckState();
-
-            }*/
 
         }
 

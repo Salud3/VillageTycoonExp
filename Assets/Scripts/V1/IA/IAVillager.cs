@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,11 @@ public class IAVillager : MonoBehaviour {
     public ManagerIA.IAStatesV oldState;
 
     [Header("Tipo de Trabajo")]
-    public ManagerIA.TipoAldeano tipoAldeano;
+    //public ManagerIA.TipoAldeano tipoAldeano;
+    VillagerType villagerType;
+
+    public string jobAssingbyType;
+    
     public Transform lugarDeTrabajo;
     public Transform lugarReposo;
     public Transform lugarEntrega;
@@ -32,9 +37,33 @@ public class IAVillager : MonoBehaviour {
     public IACostumer costumer;
 
 
+    public void AssingJob(int job)
+    {
+        villagerType = GetComponent<VillagerType>();
+        jobAssingbyType = villagerType.Type;
+        
+        lugarDeTrabajo = ManagerIA.Instance.VillagerTrabajos[job];
+        lugarReposo = ManagerIA.Instance.VillagerReposo[job];
+        lugarEntrega = ManagerIA.Instance.LugarEntregas[job];
+
+        incio();
+
+    }
+
+    int JobToInt(string job)
+    {
+        
+        if (!ManagerIA.Instance.villagerToInt.TryGetValue(jobAssingbyType, out var i ))
+        {
+            throw new Exception($"Villager {jobAssingbyType} no existe");
+        }
+        return i;
+    }
+
     public void incio() {
-        Debug.Log(GameManager.instance.LevelStation[(int)tipoAldeano].LevelStation +  tipoAldeano.ToString());
-        nivel = GameManager.instance.LevelStation[(int)tipoAldeano].LevelStation;
+        //Debug.Log(GameManager.instance.LevelStation[(int)tipoAldeano].LevelStation +  tipoAldeano.ToString());
+        
+        nivel = GameManager.instance.LevelStation[ JobToInt(jobAssingbyType) ].LevelStation;
         AssingLevelStats(nivel);
         ChangeDestination(lugarReposo);
 
@@ -124,43 +153,6 @@ public class IAVillager : MonoBehaviour {
 
     }
 
-    public void AssingJob(int job) {
-        print("Job" + job);
-        lugarDeTrabajo = ManagerIA.Instance.VillagerTrabajos[job];
-        lugarReposo = ManagerIA.Instance.VillagerReposo[job];
-        lugarEntrega = ManagerIA.Instance.LugarEntregas[job];
-
-        switch (job) {
-            case 0:
-                tipoAldeano = ManagerIA.TipoAldeano.Farm1;
-                break;
-            case 1: 
-                tipoAldeano = ManagerIA.TipoAldeano.Farm2;
-                break;
-            case 2:
-                tipoAldeano = ManagerIA.TipoAldeano.Farm3;
-                break;
-            case 3:
-                tipoAldeano = ManagerIA.TipoAldeano.Costurero;
-                break;
-            case 4:
-                tipoAldeano = ManagerIA.TipoAldeano.Panadero;
-                break;
-            case 5:
-                tipoAldeano = ManagerIA.TipoAldeano.Pescador;
-                break;
-            case 6:
-                tipoAldeano = ManagerIA.TipoAldeano.Molinero;
-                break;
-            default:
-                break;
-        }
-        incio();
-
-
-    }
-
-    
 
     //Asigna al estado actual una accion
     public void CheckState() {
@@ -228,8 +220,8 @@ public class IAVillager : MonoBehaviour {
 
         //Debug.Log("Vendiendo");
         yield return new WaitForSeconds(VelSell);
-        Debug.Log("Venta de " + (int)tipoAldeano + " " + tipoAldeano);
-        GameManager.instance.Venta((int)tipoAldeano);
+        //Debug.Log("Venta de " + (int)tipoAldeano + " " + tipoAldeano);
+        GameManager.instance.Venta(JobToInt(jobAssingbyType));
         costumer.CompraLista();
         costumer = null;
         chambeando = false;

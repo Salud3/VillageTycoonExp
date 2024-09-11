@@ -6,15 +6,17 @@ internal class SpawnCostumer : MonoBehaviour, ISpawnCostumer
 {
     private int _leveltotal;
 
-    
+    private int b;
     //Spawnea un Cliente
     public void SummonCostumer() {
-        int b = Random.Range(0, ManagerIA.Instance.EntradasDeComprador.Length);
+         b= Random.Range(0, ManagerIA.Instance.EntradasDeComprador.Length);
         
         GameObject _clone =  Instantiate( ManagerIA.Instance.costumer, 
             ManagerIA.Instance.EntradasDeComprador[b].position , new Quaternion(0,0,0,0));  
         
         ManagerIA.Instance.costumerPool.Add(_clone);
+        
+        
         _clone.gameObject.SetActive(false);
         
     }
@@ -36,8 +38,8 @@ internal class SpawnCostumer : MonoBehaviour, ISpawnCostumer
         print("tiempo de espera"+ temp_time);
 
         //Comparar cuanto es el maximo y cuantos hay en las filas iniciales
-        if ((ManagerIA.Instance._maxCostumersFI >= (ManagerIA.Instance.Costumersf1.Count+ManagerIA.Instance.Costumersf2.Count+ManagerIA.Instance.Costumersf3.Count)
-                ) && GameManager.instance.wallet[0].started)
+        if ((ManagerIA.Instance._maxCostumersFI > (ManagerIA.Instance.Costumersf1.Count+ManagerIA.Instance.Costumersf2.Count+ManagerIA.Instance.Costumersf3.Count)
+                ) && GameManager.instance.wallet[0].started && ManagerIA.Instance.costumerPool.Count > 0)
         {
             //invoca un cliente en a tiempo
             Invoke("InitCostumer", temp_time);
@@ -52,14 +54,16 @@ internal class SpawnCostumer : MonoBehaviour, ISpawnCostumer
     private void InitCostumer()
     {
         GameObject _clone = ManagerIA.Instance.costumerPool[0];
-        
+        b= Random.Range(0, ManagerIA.Instance.EntradasDeComprador.Length);
+
         _clone.gameObject.SetActive(true);
         
         int _numfila = Random.Range(0,  ManagerIA.Instance.estacionesDesbloqueadas);
 
         
         _clone.GetComponent<IACostumer>().Assing( ManagerIA.Instance.DestinosDeComprador[_numfila],
-            _numfila,  ManagerIA.Instance.SalidasDeComprador[Random.Range(0,  ManagerIA.Instance.SalidasDeComprador.Length)]);
+            _numfila,  ManagerIA.Instance.SalidasDeComprador[Random.Range(0,  ManagerIA.Instance.SalidasDeComprador.Length)],
+            ManagerIA.Instance.EntradasDeComprador[b]);
 
         switch (_numfila) {
             case 0:
