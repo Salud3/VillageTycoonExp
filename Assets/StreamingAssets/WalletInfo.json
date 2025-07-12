@@ -1,10 +1,10 @@
 {
     "Items": [
         {
-            "mon": 274227.0,
+            "mon": 5.0,
             "nae": "Wally",
             "started": true,
-            "levelV": 3
+            "levelV": 0
         }
     ]
 }

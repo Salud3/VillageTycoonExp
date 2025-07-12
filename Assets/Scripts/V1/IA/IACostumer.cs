@@ -153,7 +153,6 @@ public class IACostumer : MonoBehaviour
 
 
     }
-
     
     public void ChangeState(ManagerIA.IACostStates newstate)
     {

@@ -19,8 +19,8 @@ public class SaveSystem : MonoBehaviour
     public float moneyD;
 
     [Header("ONLYDEV")] 
-    public int[] cost;
-    public int[] earn;
+    [SerializeField] private int[] cost;
+    [SerializeField] private int[] earn;
     
     //Constant Files Name
     private const string VillageFileName = "/VillageInfo.json";

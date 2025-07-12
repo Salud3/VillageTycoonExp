@@ -88,6 +88,7 @@ public class ManagerIA : MonoBehaviour, INotifications
             obs.Updated(this);
         }
     }
+    
     //End Observer Logic
     
     void Start()

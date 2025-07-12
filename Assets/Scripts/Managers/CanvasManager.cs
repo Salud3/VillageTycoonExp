@@ -30,6 +30,7 @@ public class CanvasManager : MonoBehaviour,IObserver
         GameManager.instance.SuscribeNotification(this);
         Updated(GameManager.instance);
     }
+    
     public void Updated(INotifications notify)
     {
         if (notify is ManagerIA manager)

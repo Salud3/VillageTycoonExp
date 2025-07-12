@@ -6,8 +6,7 @@ using TMPro;
 public class GameManager : MonoBehaviour, INotifications
 {
     public static GameManager instance;
-
-    [Header("a")]
+    
     [Header("Variables para guardar")]
     public TutorialClass[] tutorials;
     public WalletClass[] wallet;
